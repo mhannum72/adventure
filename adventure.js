@@ -16,19 +16,52 @@ commands = {
     "north"   : {
                     "execute" : playermovenorth,
                     "aliases" : [
-                                  [ "north" ]
+                                  [ "north" ],
                                 ]
                 },
+
+    "south"   : {
+                    "execute" : playermovesouth,
+                    "aliases" : [
+                                  [ "south" ],
+                                ]
+                },
+    "east"    : {
+                    "execute" : playermoveeast,
+                    "aliases" : [
+                                  [ "east" ],
+                                ]
+                },
+    "west"    : {
+                    "execute" : playermovewest,
+                    "aliases" : [
+                                  [ "west" ],
+                                ]
+                },
+    "up"      : {
+                    "execute" : playermoveup,
+                    "aliases" : [
+                                  [ "up" ],
+                                ]
+                },
+    "down"    : {
+                    "execute" : playermovedown,
+                    "aliases" : [
+                                  [ "down" ],
+                                ]
+                },
+
 
     "quit"    : {
                     "execute" : stopgame,
                     "aliases" : [
-                                  [ "exit" ],
-                                  [ "quit" ],
                                   [ "end", "game" ],
                                   [ "stop", "playing" ],
                                   [ "stop", "game" ],
-                                  [ "halt", "game" ]
+                                  [ "halt", "game" ],
+                                  [ "exit" ],
+                                  [ "quit" ],
+
                                 ]
                 },
 
@@ -36,65 +69,137 @@ commands = {
     "inventory" : {
                     "execute" : showinventory,
                     "aliases" : [
-                                  [ "inventory" ],
-                                  [ "take", "inventory" ],
-                                  [ "what", "do", "i", "have?" ],
-                                  [ "what", "do", "i", "have" ],
+                                  [ "whats", "in", "my", "inventory" ],
                                   [ "whats", "in", "my", "inventory?" ],
-                                  [ "whats", "in", "my", "inventory" ]
+                                  [ "what", "do", "i", "have" ],
+                                  [ "what", "do", "i", "have?" ],
+                                  [ "take", "inventory" ],
+                                  [ "inventory" ],
                                 ]
                   },
 
     "examine" : {
                     "execute" : examineobject,
                     "aliases" : [
+                                  [ "look", "at", "the" ],
+                                  [ "look", "at" ],
+                                  [ "examine", "the" ],
                                   [ "examine" ],
                                   [ "look" ],
-                                  [ "look", "at" ],
                                 ]
                 },
     "take"    : { 
                     "execute" : takeobject,
                     "aliases" : [
-                                  [ "get" ],
+                                  [ "pick", "up", "the" ],
                                   [ "get", "the" ],
+                                  [ "pick", "up" ],
+                                  [ "grab", "the" ],
                                   [ "get", "a" ],
-                                  [ "take" ],
                                   [ "take", "the" ],
-                                  [ "take", "a" ]
+                                  [ "take", "a" ],
+                                  [ "take" ],
+                                  [ "get" ],
                                 ]
                 },
     "drop"    : { 
                     "execute" : dropobject,
                     "aliases" : [
+                                  [ "drop", "the" ],
                                   [ "drop" ],
-                                  [ "drop", "the" ]
                                 ]
                 },
+        /*
     "unused"  : {
                     "execute" : neverrun,
                     "aliases" : []
                 }
+                */
 };
 
 objects = {
-    "lightswitch" : {
-        "inroomDescription" : "a lightswitch on the wall",
-        "shortDescription"  : "a lightswitch",
-        "longDescription"   : "It's a standard lightswitch. ",
-        "lookDescription"   : "It's a standard lightswitch.  It appears to be turned off.",
-        "takeable"          : false,
+    "coathanger" : {
+        "inroomDescription" : "a wire coat hanger",
+        "shortDescription"  : "a coat hanger",
+        "longDescription"   : "A wire coat hanger hangs on the closet-rod close to the wall.",
+        "lookDescription"   : "Its a wire coat hanger.  There is a tube of cardboard covering the bottom.",
+        "takeable"          : true,
+        "visible"           : false,
         "takencount"        : 0,
         "droppedcount"      : 0,
         "aliases"           : [ 
-                                [ "lightswitch" ],
+                                [ "the", "wire", "coat","hanger" ],
+                                [ "the", "coat","hanger" ],
+                                [ "the", "wire","hanger" ],
+                                [ "wire", "coat","hanger" ],
+                                [ "the", "clothes","hanger" ],
+                                [ "the", "hanger" ],
+                                [ "coat","hanger" ],
+                                [ "wire","hanger" ],
+                                [ "clothes","hanger" ],
+                                [ "hanger" ],
+                              ]
+    },
+
+    "plasticwrap" : {
+        "inroomDescription" : "plastic wrap covering one of mommy's dresses",
+        "shortDescription"  : "plastic wrap",
+        "longDescription"   : "It's shiny plastic wrap. It covers one of mommy's dresses.",
+        "lookDescription"   : "The plastic wrap covers one of mommy's dresses. It looks very sturdy.",
+        "takeable"          : false,
+        "visible"           : false,
+        "takencount"        : 0,
+        "droppedcount"      : 0,
+        "aliases"           : [ 
+                                [ "the", "dress", "cover" ],
+                                [ "the", "plastic", "wrap" ],
+                                [ "dress", "cover" ],
+                                [ "the", "plastic" ],
+                                [ "plastic", "wrap" ],
+                                [ "plastic" ],
+                              ]
+    },
+    "mommysclothes" : {
+        "inroomDescription" : "mommy's clothes neatly hanging in rows",
+        "shortDescription"  : "mommy's clothes",
+        "longDescription"   : "Mommy's work clothes are neatly hanging on coat hangers.",
+        "lookDescription"   : "Mommy's work clothes are neatly hanging on hangers. ",
+        "takeable"          : false,
+        "visible"           : true,
+        "takencount"        : 0,
+        "droppedcount"      : 0,
+        "aliases"           : [ 
+                                [ "mommy's", "work", "clothes" ],
+                                [ "mommies", "work", "clothes" ],
+                                [ "mommys", "work", "clothes" ],
+                                [ "mommy's", "clothes" ],
+                                [ "mommies", "clothes" ],
+                                [ "mommys", "clothes" ],
+                                [ "clothes" ],
+                              ]
+    },
+
+    "lightswitch" : {
+        "inroomDescription" : "a lightswitch on the wall",
+        "shortDescription"  : "a lightswitch",
+        "longDescription"   : "It's a standard lightswitch.",
+        "lookDescription"   : "It's a standard lightswitch.  It appears to be turned off.",
+        "takeable"          : false, 
+        "visible"           : false,
+        "takencount"        : 0,
+        "droppedcount"      : 0,
+        "aliases"           : [ 
+                                [ "the", "light", "switch" ],
+                                [ "at", "the", "switch" ],
                                 [ "the", "lightswitch" ],
                                 [ "the", "light" ],
                                 [ "the", "lights" ],
-                                [ "the", "light", "switch" ],
+                                [ "the", "switch" ],
                                 [ "light", "switch" ],
-                                [ "light-switch" ],
                                 [ "the", "light-switch" ],
+                                [ "light-switch" ],
+                                [ "lightswitch" ],
+                                [ "switch" ],
                               ]
     },
     "qbamaze" : {
@@ -112,104 +217,112 @@ objects = {
         "vlookDescription"  : "The Cube Maze is a multi-colored track that normally " +
                               "carries a silver marble through a series of stunts.  Unfortunately, " +
                               "I don't see any silver marbles around here!",
-//        "takeable"          : false,
-        "takeable"          : true,
+        "takeable"          : false,
+        "visible"           : true,
+//        "takeable"          : true,
         "takencount"        : 0,
         "droppedcount"      : 0,
         "aliases"           : [ 
-                                [ "cubamaze" ],
-                                [ "the", "cubamaze" ],
-                                [ "cuba-maze" ],
-                                [ "the", "cuba-maze" ],
-                                [ "qbamaze" ],
-                                [ "the", "qbamaze" ],
-                                [ "q-ba-maze" ],
-                                [ "the", "q-ba-maze" ],
-                                [ "q", "ba", "maze" ],
                                 [ "the", "q", "ba", "maze" ],
-                                [ "qba", "maze" ],
-                                [ "the", "qba", "maze" ],
-                                [ "q-ba", "maze" ],
                                 [ "the", "q-ba", "maze" ],
+                                [ "the", "cuba", "maze" ],
+                                [ "the", "qba", "maze" ],
+                                [ "q", "ba", "maze" ],
+                                [ "the", "cuba-maze" ],
+                                [ "the", "q-ba-maze" ],
+                                [ "the", "cubamaze" ],
+                                [ "the", "qbamaze" ],
+                                [ "qba", "maze" ],
+                                [ "q-ba", "maze" ],
                                 [ "cuba", "maze" ],
-                                [ "the", "cuba", "maze" ]
+                                [ "cubamaze" ],
+                                [ "cuba-maze" ],
+                                [ "qbamaze" ],
+                                [ "q-ba-maze" ],
                               ]
     },
 
     "marble" : {
         "inroomDescription" : "a shiny silver marble is sitting on the ground underneath the shelf",
         "shortDescription"  : "a silver marble",
-        "longDescription"   : "The marble looks like the perfect size for a Q-Ba-Maze. ",
+        "longDescription"   : "The marble looks like the perfect size for a Q-Ba-Maze.",
+        "lookDescription"   : "It's a shiny silver marble that looks to be the perfect size for " +
+                              "a Q-Ba-Maze.",
         "takeable"          : true,
+        "visible"           : true,
         "takencount"        : 0,
         "droppedcount"      : 0,
         "aliases"           : [ 
-                                [ "marble" ],
-                                [ "the", "marble" ],
-                                [ "shiny", "marble" ],
-                                [ "silver", "marble" ],
-                                [ "silver", "metal", "marble" ],
-                                [ "the", "silver", "marble" ],
-                                [ "the", "shiny", "silver", "marble" ],
                                 [ "the", "shiny", "silver", "metal", "marble" ],
                                 [ "shiny", "silver", "metal", "marble" ],
-                                [ "the", "shiny", "marble" ],
-                                [ "metal", "marble" ],
-                                [ "the", "metal", "marble" ],
+                                [ "the", "shiny", "silver", "marble" ],
+                                [ "the", "shiny", "metal", "marble" ],
+                                [ "silver", "metal", "marble" ],
                                 [ "shiny", "metal", "marble" ],
-                                [ "the", "shiny", "metal", "marble" ]
+                                [ "the", "silver", "marble" ],
+                                [ "the", "shiny", "marble" ],
+                                [ "the", "metal", "marble" ],
+                                [ "silver", "marble" ],
+                                [ "shiny", "marble" ],
+                                [ "metal", "marble" ],
+                                [ "the", "marble" ],
+                                [ "marble" ],
                               ]
     },
 
     "lightstring" : {
         "inroomDescription" : "a string of green lights surrounding the window to the left",
+        "inroomLongDescription" : "It's a string of green lights surrounding the window to the left. " +
+                              "It makes the entire bedroom glow an eerie shade of green.",
         "shortDescription"  : "a string of green lights",
-        "longDescription"   : "The string of green colored lights makes the entire bedroom glow " +
-                              "an eerie shade of green. ",
+        "longDescription"   : "The string of green colored lights.",
+        "lookDescription"   : "It's a string of green colored lights makes the entire bedroom glow " +
+                              "an eerie shade of green.",
         "takeable"          : true,
+        "visible"           : true,
         "takencount"        : 0,
         "aliases"           : [ 
-                                [ "lights" ],
-                                [ "the", "lights" ],
-                                [ "string", "of", "lights" ],
-                                [ "the", "string", "of", "lights" ],
-                                [ "string", "of", "green", "lights" ],
-                                [ "christmas", "lights" ],
-                                [ "the", "christmas", "lights" ],
-                                [ "the", "string", "of", "christmas", "lights" ],
                                 [ "the", "string", "of", "green", "christmas", "lights" ],
-                                [ "green", "lights" ],
-                                [ "the", "green", "lights" ],
-                                [ "lightstring" ],
-                                [ "the", "lightstring" ],
-                                [ "the", "light", "string" ],
-                                [ "light", "string" ],
+                                [ "the", "string", "of", "christmas", "lights" ],
+                                [ "the", "string", "of", "green", "lights" ],
+                                [ "string", "of", "green", "lights" ],
                                 [ "the", "string", "of", "lights" ],
-                                [ "the", "string", "of", "green", "lights" ]
+                                [ "the", "christmas", "lights" ],
+                                [ "the", "light", "string" ],
+                                [ "the", "green", "lights" ],
+                                [ "string", "of", "lights" ],
+                                [ "christmas", "lights" ],
+                                [ "the", "lightstring" ],
+                                [ "green", "lights" ],
+                                [ "light", "string" ],
+                                [ "the", "lights" ],
+                                [ "lightstring" ],
+                                [ "lights" ],
                               ]
     }
 };
 
+// Longdescriptions are punctuated.  short descriptions are not 
 rooms = {
     "jbedroom" : { 
         "shortDescription"  : "Jackson's bedroom",
-        "longDescription"   : "You are in Jackson's Bedroom. ",
+        "longDescription"   : "You are in Jackson's Bedroom.",
         "exits"             : { 
                                 "north" : { "visible" : true,  "destination" : "uphall" },
                               },
-        "objects"           : [ "qbamaze" , "lightstring", "marble" ],
+        "objects"           : [ "qbamaze" , "lightstring" ],
         "visitCount"        : 0,
         "printedlong"       : false
     },
     "uphall" : {
         "shortDescription"  : "the upstairs hallway",
         "longDescription"   : "You are in the upstairs hallway. The light overhead casts a " +
-                              "warm glow over the glossy wooden floor. ",
+                              "warm glow over the glossy wooden floor.",
         "exits"             : { 
                                 "north" : { "visible" : true,  "destination" : "mdbedroom" }, 
                                 "south" : { "visible" : true,  "destination" : "jbedroom" }, 
-                                "east"  : { "visible" : true,  "destination" : "upbath" }, 
-                                "west"  : { "visible" : false,  "destination" : "upcloset" }, 
+                                "east"  : { "visible" : false,  "destination" : "upbath" }, 
+                                "west"  : { "visible" : true,  "destination" : "upcloset" }, 
                               },
         "objects"           : [ "lightswitch" ],
         "visitCount"        : 0,
@@ -218,26 +331,22 @@ rooms = {
 
     "upcloset" : {
         "shortDescription"  : "the upstairs closet",
-        // TODO: turn these into objects
-        "longDescription"   : "You are in the upstairs closet. There are rows and rows of " +
-                              "mommy's clothes all around. In the back there is a shelf " +
-                              "which contains neatly folded shirts. ",
+        "longDescription"   : "You are in the upstairs closet.",
         "exits"             : { 
                                 "east"  : { "visible" : true,  "destination" : "uphall" }, 
                               },
-        "objects"           : [],
+        "objects"           : [ "mommysclothes", "plasticwrap", "coathanger" ],
         "visitCount"        : 0,
         "printedlong"       : false
     },
 
     "upbath" : {
         "shortDescription"  : "the upstairs bathroom",
-        "longDescription"   : "You are in the upstairs bathroom. To the left of you " +
-                              "is a bathtub. To the right you see a toilet and a sink. ",
+        "longDescription"   : "You are in the upstairs bathroom.",
         "exits"             : { 
                                 "west"  : { "visible" : true,  "destination" : "uphall" }, 
                               },
-        "objects"           : [],
+        "objects"           : [ "bathtub", "toilet" ],
         "visitCount"        : 0,
         "printedlong"       : false
     },
@@ -245,7 +354,7 @@ rooms = {
     "mdbedroom" : {
         "shortDescription"  : "Mommie and Daddy's Bedroom",
         "longDescription"   : "You are in Mommie and Daddy's bedroom. Mommy and Daddy's " +
-                              "bed is directly in front of you. ",
+                              "bed is directly in front of you.",
         "exits"             : { 
                                 "south" : { "visible" : true,  "destination" : "uphall" }, 
                               },
@@ -258,30 +367,30 @@ rooms = {
 directions = {
     "north" : {
         "aliases"           : [ 
-                                [ "north" ], 
                                 [ "to", "the", "north" ],
                                 [ "to", "north" ],
+                                [ "north" ], 
                               ]
     },
     "south" : {
         "aliases"           : [
-                                [ "south" ],
                                 [ "to", "the", "south" ],
                                 [ "to", "south" ],
+                                [ "south" ],
                               ]
     },
     "east" : {
         "aliases"           : [ 
-                                [ "east" ],
                                 [ "to", "the", "east" ],
                                 [ "to", "east" ],
+                                [ "east" ],
                               ]
     },
     "west" : {
         "aliases"           : [
-                                [ "west" ],
                                 [ "to", "the", "west" ],
                                 [ "to", "west" ],
+                                [ "west" ],
                               ]
     },
     "up" : {
@@ -327,61 +436,69 @@ player = {
 };
 
 
-
-
-
-
 function outp(str) {
     console.log(str);
 }
 
 function showobjects(player, objects, objectlist, response) {
-    if (objectlist.length == 0) {
+
+    var count = 0;
+    var current = 0;
+    var first = true;
+
+    for (var name in objectlist) {
+        if (objects[objectlist[name]].visible)
+            count++;
+    }
+
+    if (count == 0) {
         return;
     }
 
     response.responsestring += "You see ";
 
-    var current = 0;
-    var first = true;
     for (var name in objectlist) {
-        if (!first)
-            response.responsestring += " ";
-        first = false;
+        if (objects[objectlist[name]].visible) {
 
-        if (objects[objectlist[name]].takencount == 0) {
-            if (player.usevoice && objects[objectlist[name]].vinroomDescription) {
-                response.responsestring += objects[objectlist[name]].vinroomDescription;
+            if (!first)
+                response.responsestring += " ";
+            first = false;
+
+            if (objects[objectlist[name]].takencount == 0) {
+                if (player.usevoice && objects[objectlist[name]].vinroomDescription) {
+                    response.responsestring += objects[objectlist[name]].vinroomDescription;
+                }
+                else {
+                    response.responsestring += objects[objectlist[name]].inroomDescription;
+                }
             }
             else {
-                response.responsestring += objects[objectlist[name]].inroomDescription;
+                if (player.usevoice && objects[objectlist[name]].vshortDescription) {
+                    response.responsestring += objects[objectlist[name]].vshortDescription;
+                }
+                else {
+                    response.responsestring += objects[objectlist[name]].shortDescription;
+                }
             }
-        }
-        else {
-            if (player.usevoice && objects[objectslist[name]].vshortDescription) {
-                response.responsestring += objects[objectlist[name]].vshortDescription;
-            }
-            else {
-                response.responsestring += objects[objectlist[name]].shortDescription;
-            }
-        }
 
-        current++;
-        if (objectlist.length > 1 && current == objectlist.length - 1)
-            response.responsestring += " and";
+            current++;
+            if (count > 1 && current == count - 1)
+                response.responsestring += " and";
+        }
     }
 
     response.responsestring += ". ";
+
 }
 
 function showroom(player, rooms, room, response) {
     var roominfo = rooms[room];
     if (!roominfo.printedlong) {
         if (player.usevoice && roominfo.vlongDescription) {
-            response.responsestring += roominfo.vlongDescription;
+            response.responsestring += roominfo.vlongDescription + " ";
         }
         else {
-            response.responsestring += roominfo.longDescription;
+            response.responsestring += roominfo.longDescription + " ";
         }
         roominfo.printedlong = true;
     }
@@ -519,15 +636,39 @@ function examineobject(player, words, idx, response) {
     var objects = player.objects;
     var roominfo = rooms[player.loc];
     var realobj = normalizeObject(objects, words, idx);
-    var idx = realobj ? roominfo.objects.indexOf(realobj.normalized) : -1;
+    var idx; //= realobj ? roominfo.objects.indexOf(realobj.normalized) : -1;
 
-    if (idx != -1) {
-        if (player.usevoice && objects[realobj].vlongDescription) {
-            response.responsestring += objects[realobj].vlongDescription;
-        }
-        else {
-        }
+    if (!realobj) {
+        response.responsestring += "I don't see that here.\n";
+        return idx;
     }
+
+    idx = roominfo.objects.indexOf(realobj.normalized);
+    if (idx == -1) {
+        idx = player.inventory.indexOf(realobj.normalized);
+    }
+    if (idx == -1) {
+        response.responsestring += "I don't see that here.\n";
+        return idx;
+    }
+
+    if (objects[realobj.normalized].takencount == 0 &&
+            objects[realobj.normalized].inroomLongDescription != null) {
+            if (player.usevoice && objects[realobj.normalized].vinroomLongDescription) {
+                response.responsestring += objects[realobj.normalized].vinroomLongDescription + "\n";
+            }
+            else {
+                response.responsestring += objects[realobj.normalized].inroomLongDescription + "\n";
+            }
+    }
+
+    else if (player.usevoice && objects[realobj].vlongDescription) {
+        response.responsestring += objects[realobj.normalized].vlookDescription + "\n";
+    }
+    else {
+        response.responsestring += objects[realobj.normalized].lookDescription + "\n";
+    }
+    return idx;
 }
 
 function showinventory(player, words, idx, response) {
@@ -574,13 +715,10 @@ function normalizeDirection(directions, words, idx) {
     return null;
 }
 
-
-function playermove(player, words, idx, response) {
+function playermoveint(player, words, idx, dir, response) {
     var rooms = player.rooms;
     var objects = player.objects;
-    var normalized = normalizeDirection(directions, words, idx);
     var roominfo = rooms[player.loc];
-    var dir = normalized ? normalized.normalized : null;
 
     if (dir && roominfo.exits[dir] && roominfo.exits[dir].visible) {
         player.loc = roominfo.exits[dir].destination;
@@ -590,6 +728,38 @@ function playermove(player, words, idx, response) {
         response.responsestring += "You cannot go that direction. ";
     }
     return idx + 1;
+}
+
+
+function playermove(player, words, idx, response) {
+    var normalized = normalizeDirection(directions, words, idx);
+    var dir = normalized ? normalized.normalized : null;
+    return playermoveint(player, words, idx, dir, response);
+
+}
+
+function playermovenorth(player, words, idx, response) {
+    return playermoveint(player, words, idx, "north", response);
+}
+
+function playermovesouth(player, words, idx, response) {
+    return playermoveint(player, words, idx, "south", response);
+}
+
+function playermoveeast(player, words, idx, response) {
+    return playermoveint(player, words, idx, "east", response);
+}
+
+function playermovewest(player, words, idx, response) {
+    return playermoveint(player, words, idx, "west", response);
+}
+
+function playermoveup(player, words, idx, response) {
+    return playermoveint(player, words, idx, "up", response);
+}
+
+function playermovedown(player, words, idx, response) {
+    return playermoveint(player, words, idx, "down", response);
 }
 
 function stopgame(player, words, idx, response) {
