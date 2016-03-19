@@ -619,16 +619,18 @@ player = {
     "showstatusinfo"        : true,
     "showresponsestring"    : true,
     "usevoice"              : false,
-    "introduction"          : "Welcome to Jackson's adventure. Your mission is to " +
-                              "find a rocket ship that will take you into outer space. ",
-    "voiceintroduction"     : "Welcome to Jackson's adventure. Your mission is to " +
-                              "find a rocket ship that will take you into outer space. ",
+    "introduction"          : "Welcome to Jackson's adventure! ",
+    "voiceintroduction"     : "Welcome to Jackson's adventure! ",
+        // Not sure about this yet 
+        /*
+
     "conclusion"            : "Congratulations!  You have made it to the rocket ship! " +
                               "You watch the earth disappear in the distance as the " +
                               "rocket ship takes you to Saturn. ",
     "voiceconclusion"       : "Congratulations!  You have made it to the rocket ship! " +
                               "You watch the earth disappear in the distance as the " +
                               "rocket ship takes you to Saturn. ",
+                              */
     "commands"              : commands,
     "objects"               : objects,
     "rooms"                 : rooms,
