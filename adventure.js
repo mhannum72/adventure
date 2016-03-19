@@ -13,6 +13,37 @@ commands = {
                                   [ "move" ]
                                 ]
                 },
+    "drainbath" : {
+                    "execute" : drainbath,
+                    "aliases" : [
+                                    [ "drain", "the", "water", "out", "of" ],
+                                    [ "drain", "the", "water", "out", "of" ],
+                                    [ "drain", "water", "out", "of" ],
+                                    [ "drain", "water", "from" ],
+                                    [ "let", "the", "water", "out", "of" ],
+                                    [ "let", "the", "water", "out" ],
+                                    [ "let", "the", "water", "from" ],
+                                    [ "let", "water", "out" ],
+                                ],
+                    "contextmatch" : checkdrainbath,
+
+    },
+    "opencloset" : {
+                    "execute" : opencloset,
+                    "aliases" : [
+                                    [ "open", "the" ],
+                                    [ "open" ],
+                                ],
+                    "contextmatch" : checkopencloset,
+                },
+    "unlockcloset" : {
+                    "execute" : unlockcloset,
+                    "aliases" : [
+                                    [ "unlock", "the" ],
+                                    [ "unlock" ],
+                                ],
+                    "contextmatch" : checkunlockcloset,
+                },
     "bedjump" : {
                     "execute" : bedjump,
                     "aliases" : [
@@ -22,7 +53,7 @@ commands = {
                                     [ "jump", "on" ],
                                     [ "jump" ],
                                 ],
-                    "contextmatch" : checkbedjump
+                    "contextmatch" : checkbedjump,
     
                 },
     "north"   : {
@@ -124,13 +155,101 @@ commands = {
 };
 
 objects = {
+    "bathroomsink" : {
+        "inroomDescription" : "the bathroom sink",
+        "shortDescription"  : "the bathroom sink",
+        "longDescription"   : "a normal bathroom sink.",
+        "lookDescription"   : "a normal bathroom sink.",
+        "takeable"          : false,
+        "visible"           : true,
+        "printinobjs"       : true,
+        "takencount"        : 0,
+        "droppedcount"      : 0,
+        "aliases"           : [ 
+                                [ "the", "bathroom", "sink" ],
+                                [ "bathroom", "sink" ],
+                                [ "sink" ],
+                              ],
+    },
+    "toilet" : {
+        "inroomDescription" : "a toilet bowl",
+        "shortDescription"  : "a toilet bowl",
+        "longDescription"   : "the toilet bowl is closed.",
+        "lookDescription"   : "the toilet bowl is closed.",
+        "takeable"          : false,
+        "visible"           : true,
+        "printinobjs"       : true,
+        "takencount"        : 0,
+        "droppedcount"      : 0,
+        "aliases"           : [ 
+                                [ "the", "toilet", "bowl" ],
+                                [ "toilet", "bowl" ],
+                                [ "the", "toilet" ],
+                                [ "toilet" ],
+                              ],
+    },
+    "bathwater" : {
+        "inroomDescription" : "bathwater",
+        "shortDescription"  : "bathwater",
+        "longDescription"   : "It's normal, unused bathwater covered with a layer of velvet bubbles.",
+        "lookDescription"   : "It looks like someone was taking a bubble bath. The bubbles make it impossible " +
+                              "to see the bottom of the tub.",
+        "takeable"          : false,
+        "visible"           : true,
+        "printinobjs"       : false,
+        "takencount"        : 0,
+        "droppedcount"      : 0,
+        "aliases"           : [ 
+                                [ "the", "bath", "water" ],
+                                [ "the", "water" ],
+                                [ "water" ],
+                              ],
+        "contextmatch"      : checkbathwater
+    },
+    "bubbles" : {
+        "inroomDescription" : "bubbles",
+        "shortDescription"  : "bubbles",
+        "longDescription"   : "A layer of velvet white bubbles sits on top of the bathwater.",
+        "lookDescription"   : "A layer of velvet white bubbles sits on top of the bathwater.",
+        "takeable"          : false,
+        "visible"           : true,
+        "printinobjs"       : false,
+        "takencount"        : 0,
+        "droppedcount"      : 0,
+        "aliases"           : [ 
+                                [ "the", "bubbles" ],
+                                [ "bubbles" ],
+                              ],
+    },
+    "bathtub" : {
+        "inroomDescription" : "a bathtub filled with water and bubbles",
+        "shortDescription"  : "a bathtub",
+        "longDescription"   : "It looks like a normal bathtub. It is filled to the brim with bubbles.",
+        "lookDescription"   : "It looks like someone was taking a bubble bath. The bubbles make it impossible " +
+                              "to see the bottom of the tub.",
+        "takeable"          : false,
+        "visible"           : true,
+        "printinobjs"       : true,
+        "takencount"        : 0,
+        "droppedcount"      : 0,
+        "aliases"           : [ 
+                                [ "the", "bath", "tub" ],
+                                [ "the", "bathtub" ],
+                                [ "the", "tub" ],
+                                [ "bathtub" ],
+                                [ "tub" ],
+                              ],
+        "haswater"          : true
+    },
+
     "closetdoor" : {
         "inroomDescription" : "a closet door to the west",
         "shortDescription"  : "a closet door",
-        "longDescription"   : "the closet door is locked.",
-        "lookDescription"   : "the closet door is locked.",
+        "longDescription"   : "A wooden closet door.",
+        "lookDescription"   : "It's a normal wooden door. Behind it is mommy's clothes closet. The closet door is locked.",
         "takeable"          : false,
         "visible"           : true,
+        "printinobjs"       : true,
         "takencount"        : 0,
         "droppedcount"      : 0,
         "aliases"           : [ 
@@ -140,7 +259,9 @@ objects = {
                                 [ "closet" ],
                                 [ "door" ],
                               ],
-        "contextmatch"      : checkclosetdoor
+        "contextmatch"      : checkclosetdoor,
+        "islocked"          : true,
+        "isclosed"          : true,
     },
 
     "daddysbed" : {
@@ -150,6 +271,7 @@ objects = {
         "lookDescription"   : "Mommy and Daddy's bed has been neatly made.",
         "takeable"          : false,
         "visible"           : true,
+        "printinobjs"       : true,
         "takencount"        : 0,
         "droppedcount"      : 0,
         "aliases"           : [ 
@@ -175,6 +297,7 @@ objects = {
         "lookDescription"   : "It is a tiny golden key that glimmers in the light.",
         "takeable"          : false,
         "visible"           : false,
+        "printinobjs"       : true,
         "takencount"        : 0,
         "droppedcount"      : 0,
         "aliases"           : [ 
@@ -190,12 +313,13 @@ objects = {
     },
 
     "coathanger" : {
-        "inroomDescription" : "a wire coat hanger",
+        "inroomDescription" : "a wire coat hanger next to the wall",
         "shortDescription"  : "a coat hanger",
         "longDescription"   : "A wire coat hanger hangs on the closet-rod close to the wall.",
-        "lookDescription"   : "Its a wire coat hanger.  There is a tube of cardboard covering the bottom.",
+        "lookDescription"   : "Its a wire coat hanger. There is a tube of cardboard covering the bottom.",
         "takeable"          : true,
         "visible"           : true,
+        "printinobjs"       : true,
         "takencount"        : 0,
         "droppedcount"      : 0,
         "aliases"           : [ 
@@ -220,6 +344,7 @@ objects = {
         "canttaketext"      : "You can't take that!  It's protecting mommy's dress!",
         "takeable"          : false,
         "visible"           : false,
+        "printinobjs"       : true,
         "takencount"        : 0,
         "droppedcount"      : 0,
         "aliases"           : [ 
@@ -240,6 +365,7 @@ objects = {
         "canttaketext"      : "You can't take that!  It belongs to Mommy!",
         "takeable"          : false,
         "visible"           : true,
+        "printinobjs"       : true,
         "takencount"        : 0,
         "droppedcount"      : 0,
         "aliases"           : [ 
@@ -257,9 +383,10 @@ objects = {
         "inroomDescription" : "a lightswitch on the wall",
         "shortDescription"  : "a lightswitch",
         "longDescription"   : "It's a standard lightswitch.",
-        "lookDescription"   : "It's a standard lightswitch.  It appears to be turned off.",
+        "lookDescription"   : "It's a standard lightswitch. It appears to be turned off.",
         "takeable"          : false, 
         "visible"           : false,
+        "printinobjs"       : true,
         "takencount"        : 0,
         "droppedcount"      : 0,
         "aliases"           : [ 
@@ -281,19 +408,16 @@ objects = {
         "vinroomDescription": "an ornate Cuba Maze next to the bed",
         "shortDescription"  : "a Q-Ba-Maze",
         "vshortDescription" : "a Cuba Maze",
-        "longDescription"   : "The Q-Ba-Maze looks like alot of fun.  Unfortunately, I don't " +
-                              "see any marbles around!",
-        "vlongDescription"  : "The Cuba Maze looks like alot of fun.  Unfortunately, I don't " +
-                              "see any marbles around!",
-        "lookDescription"   : "The Q-Ba-Maze is a multi-colored track that normally " +
-                              "carries a silver marble through a series of stunts.  Unfortunately, " +
-                              "I don't see any silver marbles around here!",
-        "vlookDescription"  : "The Cube Maze is a multi-colored track that normally " +
-                              "carries a silver marble through a series of stunts.  Unfortunately, " +
-                              "I don't see any silver marbles around here!",
+        "longDescription"   : "The Q-Ba-Maze looks like alot of fun.",
+        "vlongDescription"  : "The Cuba Maze looks like alot of fun.",
+        "lookDescription"   : "The Q-Ba-Maze is a multi-colored track that carries " +
+                              "a silver marble through a series of stunts.",
+        "vlookDescription"  : "The Cube Maze is a multi-colored track that carries" +
+                              "a silver marble through a series of stunts.",
         "canttaketext"      : "You can't take that!  It belongs where it is!",
         "takeable"          : false,
         "visible"           : true,
+        "printinobjs"       : true,
 //        "takeable"          : true,
         "takencount"        : 0,
         "droppedcount"      : 0,
@@ -325,6 +449,7 @@ objects = {
                               "a Q-Ba-Maze.",
         "takeable"          : false,
         "visible"           : false,
+        "printinobjs"       : true,
         "takencount"        : 0,
         "droppedcount"      : 0,
         "aliases"           : [ 
@@ -355,6 +480,7 @@ objects = {
                               "an eerie shade of green.",
         "takeable"          : true,
         "visible"           : true,
+        "printinobjs"       : true,
         "takencount"        : 0,
         "aliases"           : [ 
                                 [ "the", "string", "of", "green", "christmas", "lights" ],
@@ -377,7 +503,7 @@ objects = {
     }
 };
 
-// Longdescriptions are punctuated.  short descriptions are not 
+// Longdescriptions are punctuated. short descriptions are not 
 rooms = {
     "jbedroom" : { 
         "shortDescription"  : "Jackson's bedroom",
@@ -396,10 +522,10 @@ rooms = {
         "exits"             : { 
                                 "north" : { "visible" : true,  "destination" : "mdbedroom" }, 
                                 "south" : { "visible" : true,  "destination" : "jbedroom" }, 
-                                "east"  : { "visible" : false,  "destination" : "upbath" }, 
-                                "west"  : { "visible" : true,  "destination" : "upcloset" }, 
+                                "east"  : { "visible" : true,  "destination" : "upbath" }, 
+                                "west"  : { "visible" : false, "destination" : "upcloset" }, 
                               },
-        "objects"           : [ "lightswitch" ],
+        "objects"           : [ "lightswitch", "closetdoor" ],
         "visitCount"        : 0,
         "printedlong"       : false
     },
@@ -421,7 +547,7 @@ rooms = {
         "exits"             : { 
                                 "west"  : { "visible" : true,  "destination" : "uphall" }, 
                               },
-        "objects"           : [ "bathtub", "toilet" ],
+        "objects"           : [ "bathtub", "toilet", "bathroomsink", "marble", "bubbles", "bathwater" ],
         "visitCount"        : 0,
         "printedlong"       : false
     },
@@ -518,10 +644,9 @@ function showobjects(player, objects, objectlist, response) {
 
     var count = 0;
     var current = 0;
-    var first = true;
 
     for (var name in objectlist) {
-        if (objects[objectlist[name]].visible)
+        if (objects[objectlist[name]].visible && objects[objectlist[name]].printinobjs)
             count++;
     }
 
@@ -532,11 +657,13 @@ function showobjects(player, objects, objectlist, response) {
     response.responsestring += "You see ";
 
     for (var name in objectlist) {
-        if (objects[objectlist[name]].visible) {
+        if (objects[objectlist[name]].visible && objects[objectlist[name]].printinobjs) {
 
-            if (!first)
-                response.responsestring += " ";
-            first = false;
+            if (count > 1 && current > 0)
+                response.responsestring += ", ";
+
+            if (count > 1 && current == count - 1)
+                response.responsestring += "and ";
 
             if (objects[objectlist[name]].takencount == 0) {
                 if (player.usevoice && objects[objectlist[name]].vinroomDescription) {
@@ -556,13 +683,10 @@ function showobjects(player, objects, objectlist, response) {
             }
 
             current++;
-            if (count > 1 && current == count - 1)
-                response.responsestring += " and";
         }
     }
 
     response.responsestring += ". ";
-
 }
 
 function showroom(player, rooms, room, response) {
@@ -641,7 +765,7 @@ function normalizeCommand(player, words, idx) {
                 }
             }
             if (match && commands[cmd].contextmatch) {
-                match = commands[cmd].contextmatch(player, cmd, words, idx);
+                match = commands[cmd].contextmatch(player, cmd, words, alias.length + idx);
             }
             if (match) {
                 var newidx = alias.length + idx;
@@ -666,7 +790,7 @@ function normalizeObject(player, words, idx) {
                 }
             }
             if (match && objects[obj].contextmatch) {
-                match = objects[obj].contextmatch(player, obj, words, idx);
+                match = objects[obj].contextmatch(player, obj, words, alias.length + idx);
             }
             if (match) {
                 var newidx = alias.length + idx;
@@ -811,7 +935,7 @@ function playermoveint(player, words, idx, dir, response) {
         rooms[player.loc].visitCount++;
     }
     else {
-        response.responsestring += "You cannot go that direction. ";
+        response.responsestring += "You cannot go that direction.\n";
     }
     return idx + 1;
 }
@@ -823,13 +947,97 @@ function checkclosetdoor(player, obj, words, idx) {
     return false;
 }
 
-/* "Jump" can be used in different contexts.  Check if this is bedjump. */
-function checkbedjump(player, cmd, words, idx) {
-    if(player.loc == "mdbedroom") {
-            return true;
+function checkunlockcloset(player, cmd, words, idx) {
+    if(player.loc == "uphall") {
+            var realobj = normalizeObject(player, words, idx);
+            if (realobj && realobj.normalized == "closetdoor")
+                return true;
     }
     return false;
 }
+
+// TODO  - if we have the hanger, yes, otherwise no
+function drainbath(player, words, idx, response) {
+}
+
+function checkdrainbath(player, cmd, words, idx) {
+    if(player.loc == "upbath") {
+        return true;
+    }
+}
+
+function checkbathwater(player, cmd, words, idx) {
+    if(player.loc == "upbath") {
+        return true;
+    }
+}
+
+function checkopencloset(player, cmd, words, idx) {
+    if(player.loc == "uphall") {
+            var realobj = normalizeObject(player, words, idx);
+            if (realobj && realobj.normalized == "closetdoor")
+                return true;
+    }
+    return false;
+}
+
+/* "Jump" can be used in different contexts. Check if this is bedjump. */
+function checkbedjump(player, cmd, words, idx) {
+    if(player.loc == "mdbedroom") {
+            var realobj = normalizeObject(player, words, idx);
+            if (realobj && realobj.normalized == "daddysbed")
+                return true;
+    }
+    return false;
+}
+
+function unlockcloset(player, words, idx, response) {
+    var realobj = normalizeObject(player, words, idx);
+    if(player.loc == "uphall" && realobj && realobj.normalized == "closetdoor") {
+
+        if(!player.objects[realobj.normalized].islocked) {
+            response.responsestring += "The closet door is not locked!\n";
+        }
+        else {
+            var idx = player.inventory.indexOf("closetkey");
+
+            if (idx == -1) {
+                response.responsestring += "You can't seem to unlock the closet door. Maybe there is a key nearby?\n";
+            }
+            else {
+                player.objects[realobj.normalized].islocked = false;
+                player.objects[realobj.normalized].longDescription = "the closet door is unlocked";
+                player.objects[realobj.normalized].lookDescription = "the closet door is unlocked";
+                response.responsestring += "The shiny golden key fits the closet's lock perfectly. You turn it and hear a clicking noise.\n";
+            }
+        }
+    }
+    else {
+        // probably cant get here 
+        response.responsestring += "I don't understand.\n";
+    }
+}
+
+function opencloset(player, words, idx, response) {
+    var realobj = normalizeObject(player, words, idx);
+    if(player.loc == "uphall" && realobj && realobj.normalized == "closetdoor") {
+        if(player.objects[realobj.normalized].islocked) {
+            response.responsestring += "You attempt to turn the closet doorknob with all your strength, but it won't budge. This closet door is locked.\n";
+        }
+        else if (player.objects[realobj.normalized].isopen) {
+            response.responsestring += "The closet door is already open.\n";
+        }
+        else {
+            response.responsestring += "You turn the doorknob and watch the closet door swing open. It reveals the upstairs closet to the west.\n";
+            player.objects[realobj.normalized].longDescription = "the closet door is open";
+            player.objects[realobj.normalized].lookDescription = "the closet door is open";
+            player.objects[realobj.normalized].isopen = true;
+            player.rooms.uphall.exits.west.visible = true;
+        }
+
+    }
+}
+
 
 function bedjump(player, words, idx, response) {
     var realobj = normalizeObject(player, words, idx);
@@ -843,6 +1051,7 @@ function bedjump(player, words, idx, response) {
         if (!player.objects.closetkey.visible) {
             response.responsestring += "You see a small golden key fall from under one of the pillows onto the floor.\n";
             player.objects.closetkey.visible=true;
+            player.objects.closetkey.takeable=true;
         }
         return idx + 1;
     }
