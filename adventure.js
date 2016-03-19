@@ -146,6 +146,7 @@ objects = {
         "shortDescription"  : "plastic wrap",
         "longDescription"   : "It's shiny plastic wrap. It covers one of mommy's dresses.",
         "lookDescription"   : "The plastic wrap covers one of mommy's dresses. It looks very sturdy.",
+        "canttaketext"      : "You can't take that- it's protecting mommy's dress!",
         "takeable"          : false,
         "visible"           : false,
         "takencount"        : 0,
@@ -164,6 +165,7 @@ objects = {
         "shortDescription"  : "mommy's clothes",
         "longDescription"   : "Mommy's work clothes are neatly hanging on coat hangers.",
         "lookDescription"   : "Mommy's work clothes are neatly hanging on hangers. ",
+        "canttaketext"      : "You can't take that!  It belongs to Mommy!",
         "takeable"          : false,
         "visible"           : true,
         "takencount"        : 0,
@@ -217,6 +219,7 @@ objects = {
         "vlookDescription"  : "The Cube Maze is a multi-colored track that normally " +
                               "carries a silver marble through a series of stunts.  Unfortunately, " +
                               "I don't see any silver marbles around here!",
+        "canttaketext"      : "You can't take that!  It belongs where it is!",
         "takeable"          : false,
         "visible"           : true,
 //        "takeable"          : true,
@@ -248,8 +251,8 @@ objects = {
         "longDescription"   : "The marble looks like the perfect size for a Q-Ba-Maze.",
         "lookDescription"   : "It's a shiny silver marble that looks to be the perfect size for " +
                               "a Q-Ba-Maze.",
-        "takeable"          : true,
-        "visible"           : true,
+        "takeable"          : false,
+        "visible"           : false,
         "takencount"        : 0,
         "droppedcount"      : 0,
         "aliases"           : [ 
@@ -622,7 +625,11 @@ function takeobject(player, words, idx, response) {
         response.responsestring += "I don't see that here!\n";
     }
     else if (objects[realobj.normalized].takeable == false) {
-        response.responsestring += "I can't take that!\n";
+        if(objects[realobj.normalized].canttaketext) {
+            response.responsestring += objects[realobj.normalized].canttaketext + "\n";
+        }
+        else
+            response.responsestring += "I can't take that!\n";
     }
     else {
         roominfo.objects.splice(idx, 1);
