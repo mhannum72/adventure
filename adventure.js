@@ -13,6 +13,18 @@ commands = {
                                   [ "move" ]
                                 ]
                 },
+    "bedjump" : {
+                    "execute" : bedjump,
+                    "aliases" : [
+                                    [ "jump", "on", "the" ],
+                                    [ "bounce", "on", "the" ],
+                                    [ "bounce", "on"  ],
+                                    [ "jump", "on" ],
+                                    [ "jump" ],
+                                ],
+                    "contextmatch" : checkbedjump
+    
+                },
     "north"   : {
                     "execute" : playermovenorth,
                     "aliases" : [
@@ -109,22 +121,81 @@ commands = {
                                   [ "drop" ],
                                 ]
                 },
-        /*
-    "unused"  : {
-                    "execute" : neverrun,
-                    "aliases" : []
-                }
-                */
 };
 
 objects = {
+    "closetdoor" : {
+        "inroomDescription" : "a closet door to the west",
+        "shortDescription"  : "a closet door",
+        "longDescription"   : "the closet door is locked.",
+        "lookDescription"   : "the closet door is locked.",
+        "takeable"          : false,
+        "visible"           : true,
+        "takencount"        : 0,
+        "droppedcount"      : 0,
+        "aliases"           : [ 
+                                [ "the", "closet", "door" ],
+                                [ "the", "closet" ],
+                                [ "the", "door" ],
+                                [ "closet" ],
+                                [ "door" ],
+                              ],
+        "contextmatch"      : checkclosetdoor
+    },
+
+    "daddysbed" : {
+        "inroomDescription" : "Mommy and Daddy's neatly made bed",
+        "shortDescription"  : "Mommy and Daddy's neatly made bed",
+        "longDescription"   : "Mommy and Daddy's bed has been neatly made.",
+        "lookDescription"   : "Mommy and Daddy's bed has been neatly made.",
+        "takeable"          : false,
+        "visible"           : true,
+        "takencount"        : 0,
+        "droppedcount"      : 0,
+        "aliases"           : [ 
+                                [ "mommy", "and", "daddy's", "bed" ],
+                                [ "mommy", "and", "daddy", "bed" ],
+                                [ "mommy", "and", "daddys", "bed" ],
+                                [ "mommys", "and", "daddys", "bed" ],
+                                [ "mommies", "and", "daddies", "bed" ],
+                                [ "mommy's", "and", "daddy's", "bed" ],
+                                [ "mommy's", "bed" ],
+                                [ "mommys", "bed" ],
+                                [ "daddy's", "bed" ],
+                                [ "daddys", "bed" ],
+                                [ "the", "bed" ],
+                                [ "bed" ],
+                              ]
+    },
+
+    "closetkey" : {
+        "inroomDescription" : "a shiny golden key next to the bed",
+        "shortDescription"  : "a golden key",
+        "longDescription"   : "The key glimmers in the light.",
+        "lookDescription"   : "It is a tiny golden key that glimmers in the light.",
+        "takeable"          : false,
+        "visible"           : false,
+        "takencount"        : 0,
+        "droppedcount"      : 0,
+        "aliases"           : [ 
+                                [ "the", "shiny", "golden", "key" ],
+                                [ "shiny", "golden", "key" ],
+                                [ "the", "golden", "key" ],
+                                [ "the", "shiny", "key" ],
+                                [ "golden", "key" ],
+                                [ "shiny", "key" ],
+                                [ "the", "key" ],
+                                [ "key" ],
+                              ]
+    },
+
     "coathanger" : {
         "inroomDescription" : "a wire coat hanger",
         "shortDescription"  : "a coat hanger",
         "longDescription"   : "A wire coat hanger hangs on the closet-rod close to the wall.",
         "lookDescription"   : "Its a wire coat hanger.  There is a tube of cardboard covering the bottom.",
         "takeable"          : true,
-        "visible"           : false,
+        "visible"           : true,
         "takencount"        : 0,
         "droppedcount"      : 0,
         "aliases"           : [ 
@@ -146,7 +217,7 @@ objects = {
         "shortDescription"  : "plastic wrap",
         "longDescription"   : "It's shiny plastic wrap. It covers one of mommy's dresses.",
         "lookDescription"   : "The plastic wrap covers one of mommy's dresses. It looks very sturdy.",
-        "canttaketext"      : "You can't take that- it's protecting mommy's dress!",
+        "canttaketext"      : "You can't take that!  It's protecting mommy's dress!",
         "takeable"          : false,
         "visible"           : false,
         "takencount"        : 0,
@@ -163,8 +234,9 @@ objects = {
     "mommysclothes" : {
         "inroomDescription" : "mommy's clothes neatly hanging in rows",
         "shortDescription"  : "mommy's clothes",
-        "longDescription"   : "Mommy's work clothes are neatly hanging on coat hangers.",
-        "lookDescription"   : "Mommy's work clothes are neatly hanging on hangers. ",
+        "longDescription"   : "Mommy's work clothes are neatly hanging on coat hangers. Several of them " +
+                              "are covered in protective plastic wrap.",
+        "lookDescription"   : "Mommy's work clothes are neatly hanging on hangers.",
         "canttaketext"      : "You can't take that!  It belongs to Mommy!",
         "takeable"          : false,
         "visible"           : true,
@@ -356,12 +428,11 @@ rooms = {
 
     "mdbedroom" : {
         "shortDescription"  : "Mommie and Daddy's Bedroom",
-        "longDescription"   : "You are in Mommie and Daddy's bedroom. Mommy and Daddy's " +
-                              "bed is directly in front of you.",
+        "longDescription"   : "You are in Mommie and Daddy's bedroom.",
         "exits"             : { 
                                 "south" : { "visible" : true,  "destination" : "uphall" }, 
                               },
-        "objects"           : [],
+        "objects"           : [ "daddysbed", "closetkey" ],
         "visitCount"        : 0,
         "printedlong"       : false
     },
@@ -556,7 +627,8 @@ function neverrun(player, objects, unused, response) {
     process.exit(1);
 }
 
-function normalizeCommand(commands, words, idx) {
+function normalizeCommand(player, words, idx) {
+    var commands = player.commands;
     for (var cmd in commands) {
         aliaslist = commands[cmd].aliases;
         for (var j=0 ; j < aliaslist.length; j++) {
@@ -568,6 +640,9 @@ function normalizeCommand(commands, words, idx) {
                     break;
                 }
             }
+            if (match && commands[cmd].contextmatch) {
+                match = commands[cmd].contextmatch(player, cmd, words, idx);
+            }
             if (match) {
                 var newidx = alias.length + idx;
                 return { "normalized" : cmd, "newindex" : newidx };
@@ -577,7 +652,8 @@ function normalizeCommand(commands, words, idx) {
     return null;
 }
 
-function normalizeObject(objects, words, idx) {
+function normalizeObject(player, words, idx) {
+    var objects = player.objects;
     for (var obj in objects) {
         aliaslist = objects[obj].aliases;
         for (var j=0 ; j < aliaslist.length; j++) {
@@ -588,6 +664,9 @@ function normalizeObject(objects, words, idx) {
                     match=false;
                     break;
                 }
+            }
+            if (match && objects[obj].contextmatch) {
+                match = objects[obj].contextmatch(player, obj, words, idx);
             }
             if (match) {
                 var newidx = alias.length + idx;
@@ -602,7 +681,7 @@ function dropobject(player, words, idx, response) {
     var rooms = player.rooms;
     var objects = player.objects;
     var roominfo = rooms[player.loc];
-    var realobj = normalizeObject(objects, words, idx);
+    var realobj = normalizeObject(player, words, idx);
     var idx = realobj ? player.inventory.indexOf(realobj.normalized) : -1;
     if (idx == -1) {
         response.responsestring += "I don't have that!\n";
@@ -619,7 +698,7 @@ function takeobject(player, words, idx, response) {
     var rooms = player.rooms;
     var objects = player.objects;
     var roominfo = rooms[player.loc];
-    var realobj = normalizeObject(objects, words, idx);
+    var realobj = normalizeObject(player, words, idx);
     var idx = realobj ? roominfo.objects.indexOf(realobj.normalized) : -1;
     if (idx == -1) {
         response.responsestring += "I don't see that here!\n";
@@ -642,7 +721,7 @@ function takeobject(player, words, idx, response) {
 function examineobject(player, words, idx, response) {
     var objects = player.objects;
     var roominfo = rooms[player.loc];
-    var realobj = normalizeObject(objects, words, idx);
+    var realobj = normalizeObject(player, words, idx);
     var idx; //= realobj ? roominfo.objects.indexOf(realobj.normalized) : -1;
 
     if (!realobj) {
@@ -737,6 +816,42 @@ function playermoveint(player, words, idx, dir, response) {
     return idx + 1;
 }
 
+function checkclosetdoor(player, obj, words, idx) {
+    if(player.loc == "uphall") {
+        return true;
+    }
+    return false;
+}
+
+/* "Jump" can be used in different contexts.  Check if this is bedjump. */
+function checkbedjump(player, cmd, words, idx) {
+    if(player.loc == "mdbedroom") {
+            return true;
+    }
+    return false;
+}
+
+function bedjump(player, words, idx, response) {
+    var realobj = normalizeObject(player, words, idx);
+    if(player.loc == "mdbedroom" && realobj && realobj.normalized == "daddysbed") {
+        response.responsestring += "You vigorously jump up and down on Mommy and Daddy's bed " +
+            "making sure to mess up the covers as much as possible.\n";
+        player.objects.daddysbed.inroomDescription = "Mommy and Daddy's disheveled bed";
+        player.objects.daddysbed.shortDescription = "Mommy and Daddy's disheveled bed";
+        player.objects.daddysbed.longDescription = "Mommy and Daddy's bed is a mess!";
+        player.objects.daddysbed.lookDescription = "Mommy and Daddy's bed is a mess!";
+        if (!player.objects.closetkey.visible) {
+            response.responsestring += "You see a small golden key fall from under one of the pillows onto the floor.\n";
+            player.objects.closetkey.visible=true;
+        }
+        return idx + 1;
+    }
+    else {
+        response.resopnsestring += "I can't do that!\n";
+        return idx + 1;
+    }
+
+}
 
 function playermove(player, words, idx, response) {
     var normalized = normalizeDirection(directions, words, idx);
@@ -805,7 +920,7 @@ rl.on('line', function processline(line) {
     response.responsestring = "";
     player.showstatusinfo = true;
     player.showresponsestring = true;
-    var cmd = normalizeCommand(player.commands, words, 0);
+    var cmd = normalizeCommand(player, words, 0);
     if (cmd != null)
         (player.commands[cmd.normalized].execute)(player, words, cmd.newindex, response);
     else {
