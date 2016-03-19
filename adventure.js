@@ -553,7 +553,7 @@ rooms = {
     },
 
     "mdbedroom" : {
-        "shortDescription"  : "Mommie and Daddy's Bedroom",
+        "shortDescription"  : "Mommie and Daddy's bedroom",
         "longDescription"   : "You are in Mommie and Daddy's bedroom.",
         "exits"             : { 
                                 "south" : { "visible" : true,  "destination" : "uphall" }, 
@@ -1049,7 +1049,7 @@ function bedjump(player, words, idx, response) {
         player.objects.daddysbed.longDescription = "Mommy and Daddy's bed is a mess!";
         player.objects.daddysbed.lookDescription = "Mommy and Daddy's bed is a mess!";
         if (!player.objects.closetkey.visible) {
-            response.responsestring += "You see a small golden key fall from under one of the pillows onto the floor.\n";
+            response.responsestring += "A small golden key falls from under one of the pillows onto the floor.\n";
             player.objects.closetkey.visible=true;
             player.objects.closetkey.takeable=true;
         }
