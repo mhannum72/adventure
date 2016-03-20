@@ -3,31 +3,55 @@ commands = {
     "go"      : {
                     "execute" : playermove,
                     "aliases" : [
-                                  [ "go" ],
                                   [ "go", "to", "the" ],
                                   [ "move", "to", "the" ],
                                   [ "run", "to", "the" ],
                                   [ "walk", "to", "the" ],
                                   [ "walk" ],
                                   [ "run" ],
-                                  [ "move" ]
+                                  [ "go" ],
+                                  [ "move" ],
                                 ]
                 },
+    "drainnounless" : {
+                    "execute" : drainbath,
+                    "aliases" : [
+                                    [ "let", "the", "water", "out" ],
+                                    [ "let", "water", "out" ],
+                                ],
+                    "contextmatch" : checkdrainnounless,
+    },
     "drainbath" : {
                     "execute" : drainbath,
                     "aliases" : [
                                     [ "drain", "the", "water", "out", "of" ],
                                     [ "drain", "the", "water", "out", "of" ],
-                                    [ "drain", "water", "out", "of" ],
-                                    [ "drain", "water", "from" ],
                                     [ "let", "the", "water", "out", "of" ],
                                     [ "let", "the", "water", "out" ],
                                     [ "let", "the", "water", "from" ],
-                                    [ "let", "water", "out" ],
+                                    [ "empty", "the", "water", "from" ],
+                                    [ "drain", "water", "out", "of" ],
+                                    [ "drain", "water", "from" ],
+                                    [ "empty", "the" ],
+                                    [ "empty", "the" ],
+                                    [ "empty" ],
+                                    [ "drain" ],
+
                                 ],
                     "contextmatch" : checkdrainbath,
 
     },
+    "pulldrain" : {
+        // Empty bath commands that have the drain as the object 
+                    "execute" : drainbath,
+                    "aliases" : [
+                                    [ "pull" ],
+                                ],
+                    "contextmatch" : checkpulldrain,
+
+    },
+
+
     "opencloset" : {
                     "execute" : opencloset,
                     "aliases" : [
@@ -189,9 +213,9 @@ objects = {
                               ],
     },
     "bathwater" : {
-        "inroomDescription" : "bathwater",
-        "shortDescription"  : "bathwater",
-        "longDescription"   : "It's normal, unused bathwater covered with a layer of velvet bubbles.",
+        "inroomDescription" : "bath water",
+        "shortDescription"  : "bath water",
+        "longDescription"   : "It's normal, unused bath water covered with a layer of velvet bubbles.",
         "lookDescription"   : "It looks like someone was taking a bubble bath. The bubbles make it impossible " +
                               "to see the bottom of the tub.",
         "takeable"          : false,
@@ -201,7 +225,10 @@ objects = {
         "droppedcount"      : 0,
         "aliases"           : [ 
                                 [ "the", "bath", "water" ],
+                                [ "the", "bathwater" ],
                                 [ "the", "water" ],
+                                [ "bath", "water" ],
+                                [ "bathwater" ],
                                 [ "water" ],
                               ],
         "contextmatch"      : checkbathwater
@@ -209,8 +236,8 @@ objects = {
     "bubbles" : {
         "inroomDescription" : "bubbles",
         "shortDescription"  : "bubbles",
-        "longDescription"   : "A layer of velvet white bubbles sits on top of the bathwater.",
-        "lookDescription"   : "A layer of velvet white bubbles sits on top of the bathwater.",
+        "longDescription"   : "A layer of velvet white bubbles sits on top of the bath water.",
+        "lookDescription"   : "A layer of velvet white bubbles sits on top of the bath water.",
         "takeable"          : false,
         "visible"           : true,
         "printinobjs"       : false,
@@ -225,8 +252,8 @@ objects = {
         "inroomDescription" : "a bathtub filled with water and bubbles",
         "shortDescription"  : "a bathtub",
         "longDescription"   : "It looks like a normal bathtub. It is filled to the brim with bubbles.",
-        "lookDescription"   : "It looks like someone was taking a bubble bath. The bubbles make it impossible " +
-                              "to see the bottom of the tub.",
+        "lookDescription"   : "It looks like someone was taking a bubble bath. The bubbles make it " +
+                              "impossible to see the bottom of the tub.",
         "takeable"          : false,
         "visible"           : true,
         "printinobjs"       : true,
@@ -235,8 +262,10 @@ objects = {
         "aliases"           : [ 
                                 [ "the", "bath", "tub" ],
                                 [ "the", "bathtub" ],
+                                [ "the", "bath" ],
                                 [ "the", "tub" ],
                                 [ "bathtub" ],
+                                [ "bath" ],
                                 [ "tub" ],
                               ],
         "haswater"          : true
@@ -507,7 +536,7 @@ objects = {
 rooms = {
     "jbedroom" : { 
         "shortDescription"  : "Jackson's bedroom",
-        "longDescription"   : "You are in Jackson's Bedroom.",
+        "longDescription"   : "You are in Jackson's bedroom.",
         "exits"             : { 
                                 "north" : { "visible" : true,  "destination" : "uphall" },
                               },
@@ -619,8 +648,8 @@ player = {
     "showstatusinfo"        : true,
     "showresponsestring"    : true,
     "usevoice"              : false,
-    "introduction"          : "Welcome to Jackson's adventure! ",
-    "voiceintroduction"     : "Welcome to Jackson's adventure! ",
+    "introduction"          : "Welcome to Jackson's adventure!\n",
+    "voiceintroduction"     : "Welcome to Jackson's adventure!\n",
         // Not sure about this yet 
         /*
 
@@ -757,9 +786,19 @@ function normalizeCommand(player, words, idx) {
     var commands = player.commands;
     for (var cmd in commands) {
         aliaslist = commands[cmd].aliases;
+        // enforce that aliases have only descending number of words 
+        var countwords = aliaslist[0].length;
         for (var j=0 ; j < aliaslist.length; j++) {
             var alias=aliaslist[j];
             var match=true;
+
+            if (alias.length > countwords) {
+                outp("Normalize error for command " + cmd + " for alias " + alias);
+                outp("command aliases should be in descending order of length");
+                process.exit(1);
+            }
+            countwords=alias.length;
+
             for (var k=0 ; k < alias.length; k++) {
                 if (!words[idx + k] || words[idx + k] !== alias[k]) {
                     match=false;
@@ -781,10 +820,19 @@ function normalizeCommand(player, words, idx) {
 function normalizeObject(player, words, idx) {
     var objects = player.objects;
     for (var obj in objects) {
+        var countwords = aliaslist[0].length;
         aliaslist = objects[obj].aliases;
         for (var j=0 ; j < aliaslist.length; j++) {
             var alias=aliaslist[j];
             var match=true;
+
+            if (alias.length > countwords) {
+                outp("normalize error for object " + obj + " for alias " + alias);
+                outp("object aliases should be in descending order of length");
+                process.exit(1);
+            }
+            countwords = alias.length;
+
             for (var k=0 ; k < alias.length; k++) {
                 if (!words[idx + k] || words[idx + k] !== alias[k]) {
                     match=false;
@@ -952,26 +1000,50 @@ function checkclosetdoor(player, obj, words, idx) {
 function checkunlockcloset(player, cmd, words, idx) {
     if(player.loc == "uphall") {
             var realobj = normalizeObject(player, words, idx);
-            if (realobj && realobj.normalized == "closetdoor")
+            if (realobj && realobj.normalized == "closetdoor") {
                 return true;
+            }
     }
     return false;
 }
 
-// TODO  - if we have the hanger, yes, otherwise no
 function drainbath(player, words, idx, response) {
+}
+
+function checkpulldrain(player, cmd, words, idx) {
+    if(player.loc == "upbath") {
+        var realobj = normalizeObject(player, words, idx);
+        if (realobj && realobj.normalized == "bathdrain") {
+            return true;
+        }
+    }
+    return false;
+}
+
+function checkdrainnounless(player, cmd, words, idx) {
+    if(player.loc == "upbath") {
+        if (idx >= words.length) {
+            return true;
+        }
+    }
+    return false;
 }
 
 function checkdrainbath(player, cmd, words, idx) {
     if(player.loc == "upbath") {
-        return true;
+        var realobj = normalizeObject(player, words, idx);
+        if (realobj && realobj.normalized == "bathtub") {
+            return true;
+        }
     }
+    return false;
 }
 
 function checkbathwater(player, cmd, words, idx) {
     if(player.loc == "upbath") {
         return true;
     }
+    return false;
 }
 
 function checkopencloset(player, cmd, words, idx) {
