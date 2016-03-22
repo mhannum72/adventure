@@ -21,6 +21,14 @@ commands = {
                                 ],
                     "contextmatch" : checkdrainnounless,
     },
+    "unclogdrain" : {
+                    "execute" : unclogbath,
+                    "aliases" : [
+                                    [ "un", "clog", "drain" ],
+                                    [ "unclog", "drain" ],
+                                ],
+//                    "contextmatch" : checkdrainbath,
+    },
     "drainbath" : {
                     "execute" : drainbath,
                     "aliases" : [
@@ -39,6 +47,23 @@ commands = {
 
                                 ],
                     "contextmatch" : checkdrainbath,
+
+    },
+    "closetoilet" : {
+                    "execute" : closetoilet,
+                    "aliases" : [
+                                    [ "close" ],
+                                ],
+                    "contextmatch" : checktoilet,
+
+    },
+    "opentoilet" : {
+                    "execute" : opentoilet,
+                    "aliases" : [
+                                    [ "open" ],
+                                ],
+                    "contextmatch" : checktoilet,
+
 
     },
     "pulldrain" : {
@@ -179,11 +204,32 @@ commands = {
 };
 
 objects = {
+    "stonehenge" : {
+        "inroomDescription" : "a miniature model of stonehenge",
+        "shortDescription"  : "a miniature model of stonehenge",
+        "longDescription"   : "a miniature model of stonehenge is fused to the bottom of the tub.",
+        "lookDescription"   : "a miniature model of stonehenge that seems to have been " + 
+                              "created with shampoo bottles.",
+        "takeable"          : false,
+        "visible"           : false,
+        "printinobjs"       : true,
+        "takencount"        : 0,
+        "droppedcount"      : 0,
+        "aliases"           : [ 
+                                [ "the", "model", "of", "stone", "henge" ],
+                                [ "the", "model", "of", "stonehenge" ],
+                                [ "the", "stone", "henge" ],
+                                [ "stone", "henge" ],
+                                [ "the", "stonehenge" ],
+                                [ "stonehenge" ],
+                              ],
+        "canttaketext"      : "You can't take it. It seems to be fused to the bottom of the bathtub.",
+    },
     "bathroomsink" : {
         "inroomDescription" : "the bathroom sink",
         "shortDescription"  : "the bathroom sink",
         "longDescription"   : "a normal bathroom sink.",
-        "lookDescription"   : "a normal bathroom sink.",
+        "lookDescription"   : "It is a normal bathroom sink.",
         "takeable"          : false,
         "visible"           : true,
         "printinobjs"       : true,
@@ -194,12 +240,13 @@ objects = {
                                 [ "bathroom", "sink" ],
                                 [ "sink" ],
                               ],
+        "canttaketext"      : "You can't take the bathroom sink, silly!",
     },
     "toilet" : {
         "inroomDescription" : "a toilet bowl",
         "shortDescription"  : "a toilet bowl",
         "longDescription"   : "the toilet bowl is closed.",
-        "lookDescription"   : "the toilet bowl is closed.",
+        "lookDescription"   : "It is a normal looking toilet bowl. It is closed.",
         "takeable"          : false,
         "visible"           : true,
         "printinobjs"       : true,
@@ -211,6 +258,7 @@ objects = {
                                 [ "the", "toilet" ],
                                 [ "toilet" ],
                               ],
+        "isopen"            : false,
     },
     "bathwater" : {
         "inroomDescription" : "bath water",
@@ -441,7 +489,7 @@ objects = {
         "vlongDescription"  : "The Cuba Maze looks like alot of fun.",
         "lookDescription"   : "The Q-Ba-Maze is a multi-colored track that carries " +
                               "a silver marble through a series of stunts.",
-        "vlookDescription"  : "The Cube Maze is a multi-colored track that carries" +
+        "vlookDescription"  : "The Cuba Maze is a multi-colored track that carries" +
                               "a silver marble through a series of stunts.",
         "canttaketext"      : "You can't take that!  It belongs where it is!",
         "takeable"          : false,
@@ -471,7 +519,7 @@ objects = {
     },
 
     "marble" : {
-        "inroomDescription" : "a shiny silver marble is sitting on the ground underneath the shelf",
+        "inroomDescription" : "a shiny silver marble",
         "shortDescription"  : "a silver marble",
         "longDescription"   : "The marble looks like the perfect size for a Q-Ba-Maze.",
         "lookDescription"   : "It's a shiny silver marble that looks to be the perfect size for " +
@@ -576,7 +624,7 @@ rooms = {
         "exits"             : { 
                                 "west"  : { "visible" : true,  "destination" : "uphall" }, 
                               },
-        "objects"           : [ "bathtub", "toilet", "bathroomsink", "marble", "bubbles", "bathwater" ],
+        "objects"           : [ "bathtub", "toilet", "bathroomsink", "marble", "bubbles", "bathwater", "stonehenge" ],
         "visitCount"        : 0,
         "printedlong"       : false
     },
@@ -778,7 +826,7 @@ function showexits(player, exitlist, response) {
 }
 
 function neverrun(player, objects, unused, response) {
-    outp("I should never be in the neverrun handler");
+    outp("You should never be in the neverrun handler");
     process.exit(1);
 }
 
@@ -794,6 +842,7 @@ function normalizeCommand(player, words, idx) {
 
             if (alias.length > countwords) {
                 outp("Normalize error for command " + cmd + " for alias " + alias);
+                outp("alias.length is " + alias.length + ", countwords is " + countwords);
                 outp("command aliases should be in descending order of length");
                 process.exit(1);
             }
@@ -819,15 +868,18 @@ function normalizeCommand(player, words, idx) {
 
 function normalizeObject(player, words, idx) {
     var objects = player.objects;
+    if (idx >= words.length)
+        return null;
     for (var obj in objects) {
-        var countwords = aliaslist[0].length;
         aliaslist = objects[obj].aliases;
+        var countwords = aliaslist[0].length;
         for (var j=0 ; j < aliaslist.length; j++) {
             var alias=aliaslist[j];
             var match=true;
 
             if (alias.length > countwords) {
                 outp("normalize error for object " + obj + " for alias " + alias);
+                outp("alias.length is " + alias.length + ", countwords is " + countwords);
                 outp("object aliases should be in descending order of length");
                 process.exit(1);
             }
@@ -858,7 +910,7 @@ function dropobject(player, words, idx, response) {
     var realobj = normalizeObject(player, words, idx);
     var idx = realobj ? player.inventory.indexOf(realobj.normalized) : -1;
     if (idx == -1) {
-        response.responsestring += "I don't have that!\n";
+        response.responsestring += "You don't have that!\n";
     }
     else {
         roominfo.objects.push(realobj.normalized);
@@ -875,14 +927,20 @@ function takeobject(player, words, idx, response) {
     var realobj = normalizeObject(player, words, idx);
     var idx = realobj ? roominfo.objects.indexOf(realobj.normalized) : -1;
     if (idx == -1) {
-        response.responsestring += "I don't see that here!\n";
+        response.responsestring += "You don't see that here!\n";
     }
     else if (objects[realobj.normalized].takeable == false) {
         if(objects[realobj.normalized].canttaketext) {
             response.responsestring += objects[realobj.normalized].canttaketext + "\n";
         }
-        else
-            response.responsestring += "I can't take that!\n";
+        else {
+            if (objects[realobj.normalized].visible == false) {
+                response.responsestring += "You don't see that here!\n";
+            }
+            else {
+                response.responsestring += "You can't take that!\n";
+            }
+        }
     }
     else {
         roominfo.objects.splice(idx, 1);
@@ -899,7 +957,7 @@ function examineobject(player, words, idx, response) {
     var idx; //= realobj ? roominfo.objects.indexOf(realobj.normalized) : -1;
 
     if (!realobj) {
-        response.responsestring += "I don't see that here.\n";
+        response.responsestring += "You don't see that here.\n";
         return idx;
     }
 
@@ -908,7 +966,7 @@ function examineobject(player, words, idx, response) {
         idx = player.inventory.indexOf(realobj.normalized);
     }
     if (idx == -1) {
-        response.responsestring += "I don't see that here.\n";
+        response.responsestring += "Youj don't see that here.\n";
         return idx;
     }
 
@@ -975,6 +1033,98 @@ function normalizeDirection(directions, words, idx) {
     return null;
 }
 
+function unclogdrainsuccess(player, words, idx, response) {
+    response.responsestring += "You watch the water drain from the tub. ";
+    response.responsestring += "As the water drains out, you see a circle of miniature stones ";
+    response.responsestring += "fused to the bottom of the tub. In the center of the ";
+    response.responsestring += "circle you see a small silver marble.\n";
+    player.objects.bathtub.inroomDescription = "an empty bathtub";
+    player.objects.bathtub.shortDescription = "an empty bathtub";
+    player.objects.bathtub.longDescription = "It looks like an empty bathtub.";
+    player.objects.bathtub.lookDescription = "It looks like an empty bathtub."
+    player.objects.bathtub.haswater = false;
+    player.objects.stonehenge.visible = true;
+    player.objects.marble.visible = true;
+    player.objects.marble.takeable = true;
+}
+
+// can be called nounless - if we're here we know the intention
+function drainbath(player, words, idx, response) {
+     if(player.loc == "upbath") {
+         if (player.objects.bathtub.haswater == false) {
+             response.responsestring += "The bathtub is already drained!\n";
+         }
+         else {
+             var idx = player.inventory.indexOf("coathanger");
+             if (idx == -1) {
+                 response.responsestring += "You toggle the drain switch on and off several times. "+
+                     "It doesn't seem to work. The drain must be clogged.";
+             }
+             else {
+                 unclogdrainsuccess(player, words, idx, response);
+             }
+         }
+     }
+     else {
+         response.responsestring += "You can't do that!\n";
+     }
+}
+
+function unclogbath(player, words, idx, response) {
+     if(player.loc == "upbath") {
+         if (player.objects.bathtub.haswater == false) {
+             response.responsestring += "The bathtub is already drained!\n";
+         }
+         else {
+             var idx = player.inventory.indexOf("coathanger");
+             if (idx == -1) {
+                 response.responsestring += "You try to unclog the drain using your fingers. " +
+                     "It doesn't work.  You need something longer.\n";
+             }
+             else {
+                 unclogdrainsuccess(player, words, idx, response);
+             }
+         }
+     }
+     else {
+         response.responsestring += "You can't do that!\n";
+     }
+}
+
+function closetoilet(player, words, idx, response) {
+     if(player.loc == "upbath") {
+            var realobj = normalizeObject(player, words, idx);
+            if (realobj && realobj.normalized == "toilet") {
+                if (player.objects.toilet.isopen == false) {
+                    response.responsestring += "The toilet is already closed.\n";
+                } else {
+                    player.objects.toilet.isopen = false;
+                    response.responsestring += "You shut the lid of the toilet.";
+                    player.objects.toilet.longDescription = "The toilet bowl is closed.";
+                    player.objects.toilet.lookDescription = "It is a normal toilet bowl. It is closed.";
+                }
+            }
+     }
+}
+
+function opentoilet(player, words, idx, response) {
+     if(player.loc == "upbath") {
+            var realobj = normalizeObject(player, words, idx);
+            if (realobj && realobj.normalized == "toilet") {
+                if (player.objects.toilet.isopen == true) {
+                    response.responsestring += "The toilet is already open.\n";
+                } else {
+                    player.objects.toilet.isopen = true;
+                    response.responsestring += "You open the toilet to find that it is empty.\n";
+                    player.objects.toilet.longDescription = "The toilet bowl is open.";
+                    player.objects.toilet.lookDescription = "It is a normal toilet bowl. It is open.";
+                }
+            }
+     }
+}
+
+
+
 function playermoveint(player, words, idx, dir, response) {
     var rooms = player.rooms;
     var objects = player.objects;
@@ -1007,9 +1157,6 @@ function checkunlockcloset(player, cmd, words, idx) {
     return false;
 }
 
-function drainbath(player, words, idx, response) {
-}
-
 function checkpulldrain(player, cmd, words, idx) {
     if(player.loc == "upbath") {
         var realobj = normalizeObject(player, words, idx);
@@ -1023,6 +1170,16 @@ function checkpulldrain(player, cmd, words, idx) {
 function checkdrainnounless(player, cmd, words, idx) {
     if(player.loc == "upbath") {
         if (idx >= words.length) {
+            return true;
+        }
+    }
+    return false;
+}
+
+function checktoilet(player, cmd, words, idx) {
+    if(player.loc == "upbath") {
+        var realobj = normalizeObject(player, words, idx);
+        if (realobj && realobj.normalized == "toilet") {
             return true;
         }
     }
@@ -1079,10 +1236,15 @@ function unlockcloset(player, words, idx, response) {
                 response.responsestring += "You can't seem to unlock the closet door. Maybe there is a key nearby?\n";
             }
             else {
+                player.inventory.splice(idx, 1);
                 player.objects[realobj.normalized].islocked = false;
-                player.objects[realobj.normalized].longDescription = "the closet door is unlocked";
-                player.objects[realobj.normalized].lookDescription = "the closet door is unlocked";
-                response.responsestring += "The shiny golden key fits the closet's lock perfectly. You turn it and hear a clicking noise.\n";
+                //player.objects[realobj.normalized].longDescription = "the closet door is unlocked";
+                //player.objects[realobj.normalized].lookDescription = "the closet door is unlocked";
+                player.objects[realobj.normalized].longDescription = "the closet door is open";
+                player.objects[realobj.normalized].lookDescription = "the closet door is open";
+                player.objects[realobj.normalized].isopen = true;
+                player.rooms.uphall.exits.west.visible = true;
+                response.responsestring += "The shiny golden key fits the closet's lock perfectly. You turn it and hear a clicking noise. The closet door opens to the west.\n";
             }
         }
     }
@@ -1130,7 +1292,7 @@ function bedjump(player, words, idx, response) {
         return idx + 1;
     }
     else {
-        response.resopnsestring += "I can't do that!\n";
+        response.resopnsestring += "You can't do that!\n";
         return idx + 1;
     }
 
