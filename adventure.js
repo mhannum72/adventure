@@ -11,8 +11,34 @@ commands = {
                                   [ "run" ],
                                   [ "go" ],
                                   [ "move" ],
-                                ]
-                },
+                                ],
+                    "contextmatch" : checkhavenoun,
+
+    },
+    "lookroom" : {
+                    "execute" : lookroom,
+                    "aliases" : [
+                                    [ "show", "me", "what's", "in", "the", "room" ],
+                                    [ "show", "me", "whats", "in", "the", "room" ],
+                                    [ "show", "what's", "in", "the", "room" ],
+                                    [ "show", "whats", "in", "the", "room" ],
+                                    [ "what's", "in", "the", "room?" ],
+                                    [ "what's", "in", "the", "room" ],
+                                    [ "whats", "in", "the", "room?" ],
+                                    [ "whats", "in", "the", "room" ],
+                                    [ "show", "in", "the", "room" ],
+                                    [ "look", "at", "the", "room" ],
+                                    [ "show", "the", "room" ],
+                                    [ "look", "in", "room" ],
+                                    [ "where", "am", "I" ],
+                                    [ "where", "am", "I?" ],
+                                    [ "look", "at", "room" ],
+                                    [ "show", "room" ],
+                                    [ "look", "room" ],
+                                    [ "look", "around" ],
+                                ],
+                    "contextmatch" : checknounless,
+    },
     "drainnounless" : {
                     "execute" : drainbath,
                     "aliases" : [
@@ -24,10 +50,13 @@ commands = {
     "unclogdrain" : {
                     "execute" : unclogbath,
                     "aliases" : [
+                                    [ "un", "clog", "the", "drain" ],
+                                    [ "unclog", "the", "drain" ],
+                                    [ "unclog", "the", "drain" ],
                                     [ "un", "clog", "drain" ],
                                     [ "unclog", "drain" ],
                                 ],
-//                    "contextmatch" : checkdrainbath,
+                    "contextmatch" : checkdrainnounless
     },
     "drainbath" : {
                     "execute" : drainbath,
@@ -63,8 +92,6 @@ commands = {
                                     [ "open" ],
                                 ],
                     "contextmatch" : checktoilet,
-
-
     },
     "pulldrain" : {
         // Empty bath commands that have the drain as the object 
@@ -73,10 +100,7 @@ commands = {
                                     [ "pull" ],
                                 ],
                     "contextmatch" : checkpulldrain,
-
     },
-
-
     "opencloset" : {
                     "execute" : opencloset,
                     "aliases" : [
@@ -84,7 +108,7 @@ commands = {
                                     [ "open" ],
                                 ],
                     "contextmatch" : checkopencloset,
-                },
+    },
     "unlockcloset" : {
                     "execute" : unlockcloset,
                     "aliases" : [
@@ -92,7 +116,7 @@ commands = {
                                     [ "unlock" ],
                                 ],
                     "contextmatch" : checkunlockcloset,
-                },
+    },
     "bedjump" : {
                     "execute" : bedjump,
                     "aliases" : [
@@ -103,45 +127,49 @@ commands = {
                                     [ "jump" ],
                                 ],
                     "contextmatch" : checkbedjump,
-    
-                },
+    },
     "north"   : {
                     "execute" : playermovenorth,
                     "aliases" : [
                                   [ "north" ],
-                                ]
+                                ],
+                    "contextmatch" : checknounless,
                 },
-
     "south"   : {
                     "execute" : playermovesouth,
                     "aliases" : [
                                   [ "south" ],
-                                ]
-                },
+                                ],
+                    "contextmatch" : checknounless,
+    },
     "east"    : {
                     "execute" : playermoveeast,
                     "aliases" : [
                                   [ "east" ],
-                                ]
+                                ],
+                    "contextmatch" : checknounless,
                 },
     "west"    : {
                     "execute" : playermovewest,
                     "aliases" : [
                                   [ "west" ],
-                                ]
+                                ],
+                    "contextmatch" : checknounless,
                 },
     "up"      : {
                     "execute" : playermoveup,
                     "aliases" : [
                                   [ "up" ],
-                                ]
+                                ],
+                    "contextmatch" : checknounless,
                 },
     "down"    : {
                     "execute" : playermovedown,
                     "aliases" : [
                                   [ "down" ],
-                                ]
-                },
+                                ],
+                    "contextmatch" : checknounless,
+    },
 
 
     "quit"    : {
@@ -154,8 +182,9 @@ commands = {
                                   [ "exit" ],
                                   [ "quit" ],
 
-                                ]
-                },
+                                ],
+                    "contextmatch" : checknounless,
+    },
 
     // Keep before the 'take' command so that 'take inventory' will work
     "inventory" : {
@@ -167,8 +196,9 @@ commands = {
                                   [ "what", "do", "i", "have?" ],
                                   [ "take", "inventory" ],
                                   [ "inventory" ],
-                                ]
-                  },
+                                ],
+                    "contextmatch" : checknounless,
+    },
 
     "examine" : {
                     "execute" : examineobject,
@@ -178,8 +208,9 @@ commands = {
                                   [ "examine", "the" ],
                                   [ "examine" ],
                                   [ "look" ],
-                                ]
-                },
+                                ],
+                    "contextmatch" : checkhavenoun,
+    },
     "take"    : { 
                     "execute" : takeobject,
                     "aliases" : [
@@ -192,15 +223,17 @@ commands = {
                                   [ "take", "a" ],
                                   [ "take" ],
                                   [ "get" ],
-                                ]
-                },
+                                ],
+                    "contextmatch" : checkhavenoun,
+    },
     "drop"    : { 
                     "execute" : dropobject,
                     "aliases" : [
                                   [ "drop", "the" ],
                                   [ "drop" ],
-                                ]
-                },
+                                ],
+                    "contextmatch" : checkhavenoun,
+    },
 };
 
 objects = {
@@ -364,7 +397,7 @@ objects = {
                                 [ "daddys", "bed" ],
                                 [ "the", "bed" ],
                                 [ "bed" ],
-                              ]
+                              ],
     },
 
     "closetkey" : {
@@ -553,8 +586,7 @@ objects = {
                               "It makes the entire bedroom glow an eerie shade of green.",
         "shortDescription"  : "a string of green lights",
         "longDescription"   : "The string of green colored lights.",
-        "lookDescription"   : "It's a string of green colored lights makes the entire bedroom glow " +
-                              "an eerie shade of green.",
+        "lookDescription"   : "It's a string of green colored lights. It glow an eerie shade of green.",
         "takeable"          : true,
         "visible"           : true,
         "printinobjs"       : true,
@@ -576,7 +608,7 @@ objects = {
                                 [ "the", "lights" ],
                                 [ "lightstring" ],
                                 [ "lights" ],
-                              ]
+                              ],
     }
 };
 
@@ -696,8 +728,8 @@ player = {
     "showstatusinfo"        : true,
     "showresponsestring"    : true,
     "usevoice"              : false,
-    "introduction"          : "Welcome to Jackson's adventure!\n",
-    "voiceintroduction"     : "Welcome to Jackson's adventure!\n",
+    "introduction"          : "Welcome to Jackson's adventure! ",
+    "voiceintroduction"     : "Welcome to Jackson's adventure! ",
         // Not sure about this yet 
         /*
 
@@ -831,15 +863,18 @@ function neverrun(player, objects, unused, response) {
 }
 
 function normalizeCommand(player, words, idx) {
-    var commands = player.commands;
-    for (var cmd in commands) {
-        aliaslist = commands[cmd].aliases;
+    //var commands = player.commands;
+
+    if (idx >= words.length)
+        return null;
+
+    for (var cmd in player.commands) {
+        var aliaslist = player.commands[cmd].aliases;
         // enforce that aliases have only descending number of words 
         var countwords = aliaslist[0].length;
         for (var j=0 ; j < aliaslist.length; j++) {
             var alias=aliaslist[j];
             var match=true;
-
             if (alias.length > countwords) {
                 outp("Normalize error for command " + cmd + " for alias " + alias);
                 outp("alias.length is " + alias.length + ", countwords is " + countwords);
@@ -854,8 +889,8 @@ function normalizeCommand(player, words, idx) {
                     break;
                 }
             }
-            if (match && commands[cmd].contextmatch) {
-                match = commands[cmd].contextmatch(player, cmd, words, alias.length + idx);
+            if (match && player.commands[cmd].contextmatch) {
+                match = player.commands[cmd].contextmatch(player, cmd, words, alias.length + idx);
             }
             if (match) {
                 var newidx = alias.length + idx;
@@ -866,8 +901,11 @@ function normalizeCommand(player, words, idx) {
     return null;
 }
 
-function normalizeObject(player, words, idx) {
+function normalizeObject(player, inwords, inidx) {
+    var words = inwords;
+    var idx = inidx;
     var objects = player.objects;
+
     if (idx >= words.length)
         return null;
     for (var obj in objects) {
@@ -910,13 +948,13 @@ function dropobject(player, words, idx, response) {
     var realobj = normalizeObject(player, words, idx);
     var idx = realobj ? player.inventory.indexOf(realobj.normalized) : -1;
     if (idx == -1) {
-        response.responsestring += "You don't have that!\n";
+        response.responsestring += "You don't have that! ";
     }
     else {
         roominfo.objects.push(realobj.normalized);
         player.inventory.splice(idx, 1);
         objects[realobj.normalized].droppedcount++;
-        response.responsestring += "Dropped.\n";
+        response.responsestring += "Dropped. ";
     }
 }
 
@@ -927,18 +965,18 @@ function takeobject(player, words, idx, response) {
     var realobj = normalizeObject(player, words, idx);
     var idx = realobj ? roominfo.objects.indexOf(realobj.normalized) : -1;
     if (idx == -1) {
-        response.responsestring += "You don't see that here!\n";
+        response.responsestring += "You don't see that here! ";
     }
     else if (objects[realobj.normalized].takeable == false) {
         if(objects[realobj.normalized].canttaketext) {
-            response.responsestring += objects[realobj.normalized].canttaketext + "\n";
+            response.responsestring += objects[realobj.normalized].canttaketext;
         }
         else {
             if (objects[realobj.normalized].visible == false) {
-                response.responsestring += "You don't see that here!\n";
+                response.responsestring += "You don't see that here! ";
             }
             else {
-                response.responsestring += "You can't take that!\n";
+                response.responsestring += "You can't take that! ";
             }
         }
     }
@@ -946,7 +984,7 @@ function takeobject(player, words, idx, response) {
         roominfo.objects.splice(idx, 1);
         player.inventory.push(realobj.normalized);
         objects[realobj.normalized].takencount++;
-        response.responsestring += "Taken.\n";
+        response.responsestring += "Taken. ";
     }
 }
 
@@ -957,7 +995,7 @@ function examineobject(player, words, idx, response) {
     var idx; //= realobj ? roominfo.objects.indexOf(realobj.normalized) : -1;
 
     if (!realobj) {
-        response.responsestring += "You don't see that here.\n";
+        response.responsestring += "You don't see that here. ";
         return idx;
     }
 
@@ -966,50 +1004,55 @@ function examineobject(player, words, idx, response) {
         idx = player.inventory.indexOf(realobj.normalized);
     }
     if (idx == -1) {
-        response.responsestring += "Youj don't see that here.\n";
+        response.responsestring += "You don't see that here. ";
         return idx;
     }
 
     if (objects[realobj.normalized].takencount == 0 &&
             objects[realobj.normalized].inroomLongDescription != null) {
             if (player.usevoice && objects[realobj.normalized].vinroomLongDescription) {
-                response.responsestring += objects[realobj.normalized].vinroomLongDescription + "\n";
+                response.responsestring += objects[realobj.normalized].vinroomLongDescription;
             }
             else {
-                response.responsestring += objects[realobj.normalized].inroomLongDescription + "\n";
+                response.responsestring += objects[realobj.normalized].inroomLongDescription;
             }
     }
 
     else if (player.usevoice && objects[realobj].vlongDescription) {
-        response.responsestring += objects[realobj.normalized].vlookDescription + "\n";
+        response.responsestring += objects[realobj.normalized].vlookDescription;
     }
     else {
-        response.responsestring += objects[realobj.normalized].lookDescription + "\n";
+        response.responsestring += objects[realobj.normalized].lookDescription;
     }
+    response.responsestring += " ";
     return idx;
 }
 
 function showinventory(player, words, idx, response) {
     var objects = player.objects;
     if (player.inventory.length == 0) {
-        response.responsestring += "You aren't carrying anything.\n";
+        response.responsestring += "You aren't carrying anything. ";
     }
     else {
-        response.responsestring += "You are carrying:\n";
+        response.responsestring += "You are carrying ";
         for (var idx = 0 ; idx < player.inventory.length; idx++) {
+
+            if (player.inventory.length > 1 && idx == player.inventory.length - 1)
+                response.responsestring += " and ";
+            else if (player.inventory.length > 1 && idx > 0)
+                response.responsestring += ", ";
+            
             if (player.usevoice && objects[player.inventory[idx]].vshortDescription) {
                 response.responsestring += 
-                    objects[player.inventory[idx]].vshortDescription + "\n";
+                    objects[player.inventory[idx]].vshortDescription;
             }
             else {
                 response.responsestring += 
-                    objects[player.inventory[idx]].shortDescription + "\n";
+                    objects[player.inventory[idx]].shortDescription;
             }
         }
+        response.responsestring += ". ";
     }
-}
-
-function exitgame(player, rooms, objects, object, response) {
 }
 
 function normalizeDirection(directions, words, idx) {
@@ -1037,7 +1080,7 @@ function unclogdrainsuccess(player, words, idx, response) {
     response.responsestring += "You watch the water drain from the tub. ";
     response.responsestring += "As the water drains out, you see a circle of miniature stones ";
     response.responsestring += "fused to the bottom of the tub. In the center of the ";
-    response.responsestring += "circle you see a small silver marble.\n";
+    response.responsestring += "circle you see a small silver marble.";
     player.objects.bathtub.inroomDescription = "an empty bathtub";
     player.objects.bathtub.shortDescription = "an empty bathtub";
     player.objects.bathtub.longDescription = "It looks like an empty bathtub.";
@@ -1048,17 +1091,21 @@ function unclogdrainsuccess(player, words, idx, response) {
     player.objects.marble.takeable = true;
 }
 
+function lookroom(player, words, idx, response) {
+    player.showstatusinfo = true;
+}
+
 // can be called nounless - if we're here we know the intention
 function drainbath(player, words, idx, response) {
      if(player.loc == "upbath") {
          if (player.objects.bathtub.haswater == false) {
-             response.responsestring += "The bathtub is already drained!\n";
+             response.responsestring += "The bathtub is already drained! ";
          }
          else {
              var idx = player.inventory.indexOf("coathanger");
              if (idx == -1) {
                  response.responsestring += "You toggle the drain switch on and off several times. "+
-                     "It doesn't seem to work. The drain must be clogged.";
+                     "It doesn't seem to work. The drain must be clogged. ";
              }
              else {
                  unclogdrainsuccess(player, words, idx, response);
@@ -1066,20 +1113,20 @@ function drainbath(player, words, idx, response) {
          }
      }
      else {
-         response.responsestring += "You can't do that!\n";
+         response.responsestring += "You can't do that! ";
      }
 }
 
 function unclogbath(player, words, idx, response) {
      if(player.loc == "upbath") {
          if (player.objects.bathtub.haswater == false) {
-             response.responsestring += "The bathtub is already drained!\n";
+             response.responsestring += "The bathtub is already drained! ";
          }
          else {
              var idx = player.inventory.indexOf("coathanger");
              if (idx == -1) {
                  response.responsestring += "You try to unclog the drain using your fingers. " +
-                     "It doesn't work.  You need something longer.\n";
+                     "It doesn't work.  You need something longer. ";
              }
              else {
                  unclogdrainsuccess(player, words, idx, response);
@@ -1087,7 +1134,7 @@ function unclogbath(player, words, idx, response) {
          }
      }
      else {
-         response.responsestring += "You can't do that!\n";
+         response.responsestring += "You can't do that! ";
      }
 }
 
@@ -1096,12 +1143,12 @@ function closetoilet(player, words, idx, response) {
             var realobj = normalizeObject(player, words, idx);
             if (realobj && realobj.normalized == "toilet") {
                 if (player.objects.toilet.isopen == false) {
-                    response.responsestring += "The toilet is already closed.\n";
+                    response.responsestring += "The toilet is already closed. ";
                 } else {
                     player.objects.toilet.isopen = false;
-                    response.responsestring += "You shut the lid of the toilet.";
-                    player.objects.toilet.longDescription = "The toilet bowl is closed.";
-                    player.objects.toilet.lookDescription = "It is a normal toilet bowl. It is closed.";
+                    response.responsestring += "You shut the lid of the toilet. ";
+                    player.objects.toilet.longDescription = "The toilet bowl is closed. ";
+                    player.objects.toilet.lookDescription = "It is a normal toilet bowl. It is closed. ";
                 }
             }
      }
@@ -1112,12 +1159,12 @@ function opentoilet(player, words, idx, response) {
             var realobj = normalizeObject(player, words, idx);
             if (realobj && realobj.normalized == "toilet") {
                 if (player.objects.toilet.isopen == true) {
-                    response.responsestring += "The toilet is already open.\n";
+                    response.responsestring += "The toilet is already open. ";
                 } else {
                     player.objects.toilet.isopen = true;
-                    response.responsestring += "You open the toilet to find that it is empty.\n";
-                    player.objects.toilet.longDescription = "The toilet bowl is open.";
-                    player.objects.toilet.lookDescription = "It is a normal toilet bowl. It is open.";
+                    response.responsestring += "You open the toilet to find that it is empty. ";
+                    player.objects.toilet.longDescription = "The toilet bowl is open. ";
+                    player.objects.toilet.lookDescription = "It is a normal toilet bowl. It is open. ";
                 }
             }
      }
@@ -1133,9 +1180,10 @@ function playermoveint(player, words, idx, dir, response) {
     if (dir && roominfo.exits[dir] && roominfo.exits[dir].visible) {
         player.loc = roominfo.exits[dir].destination;
         rooms[player.loc].visitCount++;
+        player.showstatusinfo = true;
     }
     else {
-        response.responsestring += "You cannot go that direction.\n";
+        response.responsestring += "You cannot go that direction. ";
     }
     return idx + 1;
 }
@@ -1148,6 +1196,10 @@ function checkclosetdoor(player, obj, words, idx) {
 }
 
 function checkunlockcloset(player, cmd, words, idx) {
+
+    if(idx >= words.length)
+        return false;
+
     if(player.loc == "uphall") {
             var realobj = normalizeObject(player, words, idx);
             if (realobj && realobj.normalized == "closetdoor") {
@@ -1158,11 +1210,28 @@ function checkunlockcloset(player, cmd, words, idx) {
 }
 
 function checkpulldrain(player, cmd, words, idx) {
+    if(idx >= words.length)
+        return false;
+
     if(player.loc == "upbath") {
         var realobj = normalizeObject(player, words, idx);
         if (realobj && realobj.normalized == "bathdrain") {
             return true;
         }
+    }
+    return false;
+}
+
+function checkhavenoun(player, cmd, words, idx) {
+    if (idx < words.length) {
+        return true;
+    }
+    return false;
+}
+
+function checknounless(player, cmd, words, idx) {
+    if (idx >= words.length) {
+        return true;
     }
     return false;
 }
@@ -1177,6 +1246,10 @@ function checkdrainnounless(player, cmd, words, idx) {
 }
 
 function checktoilet(player, cmd, words, idx) {
+
+    if(idx >= words.length)
+        return false;
+
     if(player.loc == "upbath") {
         var realobj = normalizeObject(player, words, idx);
         if (realobj && realobj.normalized == "toilet") {
@@ -1204,6 +1277,9 @@ function checkbathwater(player, cmd, words, idx) {
 }
 
 function checkopencloset(player, cmd, words, idx) {
+    if(idx >= words.length)
+        return false;
+
     if(player.loc == "uphall") {
             var realobj = normalizeObject(player, words, idx);
             if (realobj && realobj.normalized == "closetdoor")
@@ -1214,6 +1290,9 @@ function checkopencloset(player, cmd, words, idx) {
 
 /* "Jump" can be used in different contexts. Check if this is bedjump. */
 function checkbedjump(player, cmd, words, idx) {
+    if(idx >= words.length)
+        return false;
+
     if(player.loc == "mdbedroom") {
             var realobj = normalizeObject(player, words, idx);
             if (realobj && realobj.normalized == "daddysbed")
@@ -1227,16 +1306,17 @@ function unlockcloset(player, words, idx, response) {
     if(player.loc == "uphall" && realobj && realobj.normalized == "closetdoor") {
 
         if(!player.objects[realobj.normalized].islocked) {
-            response.responsestring += "The closet door is not locked!\n";
+            response.responsestring += "The closet door is not locked! ";
         }
         else {
             var idx = player.inventory.indexOf("closetkey");
 
             if (idx == -1) {
-                response.responsestring += "You can't seem to unlock the closet door. Maybe there is a key nearby?\n";
+                response.responsestring += "You can't seem to unlock the closet door. Maybe there is a key nearby? ";
             }
             else {
-                player.inventory.splice(idx, 1);
+                // Dont take it away while i test inventory
+                //player.inventory.splice(idx, 1);
                 player.objects[realobj.normalized].islocked = false;
                 //player.objects[realobj.normalized].longDescription = "the closet door is unlocked";
                 //player.objects[realobj.normalized].lookDescription = "the closet door is unlocked";
@@ -1244,13 +1324,13 @@ function unlockcloset(player, words, idx, response) {
                 player.objects[realobj.normalized].lookDescription = "the closet door is open";
                 player.objects[realobj.normalized].isopen = true;
                 player.rooms.uphall.exits.west.visible = true;
-                response.responsestring += "The shiny golden key fits the closet's lock perfectly. You turn it and hear a clicking noise. The closet door opens to the west.\n";
+                response.responsestring += "The shiny golden key fits the closet's lock perfectly. You turn it and hear a clicking noise. The closet door opens to the west. ";
             }
         }
     }
     else {
         // probably cant get here 
-        response.responsestring += "I don't understand.\n";
+        response.responsestring += "I don't understand. ";
     }
 }
 
@@ -1258,13 +1338,13 @@ function opencloset(player, words, idx, response) {
     var realobj = normalizeObject(player, words, idx);
     if(player.loc == "uphall" && realobj && realobj.normalized == "closetdoor") {
         if(player.objects[realobj.normalized].islocked) {
-            response.responsestring += "You attempt to turn the closet doorknob with all your strength, but it won't budge. This closet door is locked.\n";
+            response.responsestring += "You attempt to turn the closet doorknob with all your strength, but it won't budge. This closet door is locked. ";
         }
         else if (player.objects[realobj.normalized].isopen) {
-            response.responsestring += "The closet door is already open.\n";
+            response.responsestring += "The closet door is already open. ";
         }
         else {
-            response.responsestring += "You turn the doorknob and watch the closet door swing open. It reveals the upstairs closet to the west.\n";
+            response.responsestring += "You turn the doorknob and watch the closet door swing open. It reveals the upstairs closet to the west. ";
             player.objects[realobj.normalized].longDescription = "the closet door is open";
             player.objects[realobj.normalized].lookDescription = "the closet door is open";
             player.objects[realobj.normalized].isopen = true;
@@ -1279,20 +1359,20 @@ function bedjump(player, words, idx, response) {
     var realobj = normalizeObject(player, words, idx);
     if(player.loc == "mdbedroom" && realobj && realobj.normalized == "daddysbed") {
         response.responsestring += "You vigorously jump up and down on Mommy and Daddy's bed " +
-            "making sure to mess up the covers as much as possible.\n";
+            "making sure to mess up the covers as much as possible. ";
         player.objects.daddysbed.inroomDescription = "Mommy and Daddy's disheveled bed";
         player.objects.daddysbed.shortDescription = "Mommy and Daddy's disheveled bed";
         player.objects.daddysbed.longDescription = "Mommy and Daddy's bed is a mess!";
         player.objects.daddysbed.lookDescription = "Mommy and Daddy's bed is a mess!";
         if (!player.objects.closetkey.visible) {
-            response.responsestring += "A small golden key falls from under one of the pillows onto the floor.\n";
+            response.responsestring += "A small golden key falls from under one of the pillows onto the floor. ";
             player.objects.closetkey.visible=true;
             player.objects.closetkey.takeable=true;
         }
         return idx + 1;
     }
     else {
-        response.resopnsestring += "You can't do that!\n";
+        response.resopnsestring += "You can't do that! ";
         return idx + 1;
     }
 
@@ -1363,14 +1443,14 @@ rl.on('line', function processline(line) {
     var lc = line.toLowerCase();
     var words = lc.split(" ");
     response.responsestring = "";
-    player.showstatusinfo = true;
+    player.showstatusinfo = false;
     player.showresponsestring = true;
     var cmd = normalizeCommand(player, words, 0);
     if (cmd != null)
         (player.commands[cmd.normalized].execute)(player, words, cmd.newindex, response);
     else {
         if (words[0].length > 0)
-            response.responsestring += "I do not understand that command.\n";
+            response.responsestring += "I do not understand that command. ";
         else {
             player.showstatusinfo = false;
             player.showresponsestring = false;
@@ -1381,14 +1461,20 @@ rl.on('line', function processline(line) {
         process.exit(0);
     }
     if (player.finished) {
+        if (response.responsestring.length > 0)
+            response.responsestring += "\n";
         response.responsestring += player.conclusion;
         outp(response.responsestring);
     }
     else {
-        if (player.showstatusinfo)
+        if (player.showstatusinfo) {
+            if (player.showresponsestring && response.responsestring.length > 0)
+                response.responsestring += "\n";
             showstatusinfo(player, player.rooms, player.objects, response);
-        if (player.showresponsestring)
+        }
+        if (player.showresponsestring) {
             outp(response.responsestring);
+        }
         rl.prompt();
     }
 });
