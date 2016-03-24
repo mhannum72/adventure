@@ -240,10 +240,10 @@ objects = {
     "stonehenge" : {
         "inroomDescription" : "a miniature model of stonehenge",
         "shortDescription"  : "a miniature model of stonehenge",
-        "longDescription"   : "a miniature model of stonehenge is fused to the bottom of the tub.",
-        "lookDescription"   : "a miniature model of stonehenge that seems to have been " + 
+        "longDescription"   : "A miniature model of stonehenge is fused to the bottom of the tub.",
+        "lookDescription"   : "A miniature model of stonehenge that seems to have been " + 
                               "created with shampoo bottles.",
-        "takeable"          : false,
+        "takeable"          : false
         "visible"           : false,
         "printinobjs"       : true,
         "takencount"        : 0,
@@ -261,7 +261,7 @@ objects = {
     "bathroomsink" : {
         "inroomDescription" : "the bathroom sink",
         "shortDescription"  : "the bathroom sink",
-        "longDescription"   : "a normal bathroom sink.",
+        "longDescription"   : "A normal bathroom sink.",
         "lookDescription"   : "It is a normal bathroom sink.",
         "takeable"          : false,
         "visible"           : true,
@@ -278,7 +278,7 @@ objects = {
     "toilet" : {
         "inroomDescription" : "a toilet bowl",
         "shortDescription"  : "a toilet bowl",
-        "longDescription"   : "the toilet bowl is closed.",
+        "longDescription"   : "The toilet bowl is closed.",
         "lookDescription"   : "It is a normal looking toilet bowl. It is closed.",
         "takeable"          : false,
         "visible"           : true,
@@ -426,7 +426,7 @@ objects = {
         "inroomDescription" : "a wire coat hanger next to the wall",
         "shortDescription"  : "a coat hanger",
         "longDescription"   : "A wire coat hanger hangs on the closet-rod close to the wall.",
-        "lookDescription"   : "Its a wire coat hanger. There is a tube of cardboard covering the bottom.",
+        "lookDescription"   : "It's a wire coat hanger. There is a tube of cardboard covering the bottom edge.",
         "takeable"          : true,
         "visible"           : true,
         "printinobjs"       : true,
@@ -770,8 +770,11 @@ function showobjects(player, objects, objectlist, response) {
     for (var name in objectlist) {
         if (objects[objectlist[name]].visible && objects[objectlist[name]].printinobjs) {
 
-            if (count > 1 && current > 0)
-                response.responsestring += ", ";
+            if (count > 1 && current > 0)  
+                if (current != count - 1)
+                    response.responsestring += ", ";
+                else
+                    response.responsestring += " ";
 
             if (count > 1 && current == count - 1)
                 response.responsestring += "and ";
