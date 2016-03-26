@@ -243,7 +243,7 @@ objects = {
         "longDescription"   : "A miniature model of stonehenge is fused to the bottom of the tub.",
         "lookDescription"   : "A miniature model of stonehenge that seems to have been " + 
                               "created with shampoo bottles.",
-        "takeable"          : false
+        "takeable"          : false,
         "visible"           : false,
         "printinobjs"       : true,
         "takencount"        : 0,
